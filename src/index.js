@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import Rooms from "./Containers/Rooms.js";
 
 import "./styles.css";
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello Pummy hghghghgt</h1>
-      <h2>Start editing to see some magic happen!</h2>
+      <Rooms />
     </div>
   );
 }
