@@ -19,8 +19,8 @@ class DateContainer extends React.Component {
   }
 
   validCheckInDate(e) {
-    console.log("checkInDateValue : ");
-    console.log(e.target.value);
+    // console.log("checkInDateValue : ");
+    // console.log(e.target.value);
     // if (
     //   e.target.value === null ||
     //   e.target.value === "" ||
@@ -35,8 +35,8 @@ class DateContainer extends React.Component {
     //}
   }
   validCheckOutDate(e) {
-    console.log("checkOutDateValue : ");
-    console.log(e.target.value);
+    // console.log("checkOutDateValue : ");
+    // console.log(e.target.value);
     // if (
     //   e.target.value === null ||
     //   e.target.value === "" ||
@@ -51,12 +51,12 @@ class DateContainer extends React.Component {
     //}
   }
   handleSearch(e) {
-    console.log(
-      "What are the values of checkInDateFlag : " +
-        this.state.checkInDateFlag +
-        "  checkOutDateFlag : " +
-        this.state.checkOutDateFlag
-    );
+    // console.log(
+    //   "What are the values of checkInDateFlag : " +
+    //     this.state.checkInDateFlag +
+    //     "  checkOutDateFlag : " +
+    //     this.state.checkOutDateFlag
+    // );
     if (this.state.checkInDateFlag && this.state.checkOutDateFlag) {
       //Call the Action
       this.props.showRoomsContainer(
@@ -69,20 +69,24 @@ class DateContainer extends React.Component {
         this.state.checkInDateValue +
         " to " +
         this.state.checkOutDateValue;
-      console.log("Message : " + dates);
+      // console.log("Message : " + dates);
     } else {
       dates = "Please selecte check in and check out dates";
-      console.log("Message : " + dates);
+      // console.log("Message : " + dates);
     }
   }
 
   render() {
     return (
       <div className="date_search">
-        <h5> Please enter check in and check out dates</h5>
+        <div className="panel">
+          <h3 className="pageTitle">
+            Please enter check in and check out dates
+          </h3>
+        </div>
         <div className="row">
           <div className="col-sm-6">
-            <lable>CheckIn date</lable>{" "}
+            <label>CheckIn date</label>{" "}
             <input
               className="form-control"
               type="date"
@@ -93,7 +97,7 @@ class DateContainer extends React.Component {
             />
           </div>
           <div className="col-sm-6">
-            <lable>CheckOut date</lable>{" "}
+            <label>CheckOut date</label>{" "}
             <input
               className="form-control"
               type="date"

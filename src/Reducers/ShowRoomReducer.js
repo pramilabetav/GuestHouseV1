@@ -3,18 +3,28 @@ const initialState = {
     checkInDate: "",
     checkOutDate: "",
     roomFlag: false,
-    addRoomFlag: false
+    addRoomFlag: false,
+    successFlag: false,
+    editFlag: false,
+    addOrUpdate: ""
   }
 };
 
 export default function(state = initialState, action) {
-  console.log("ShowRoomREducer printing action :-");
-  console.log(action);
+  console.log("SHOW_ROOM_REDUCER : action.type : ", action.type);
+  console.log("SHOW_ROOM_REDUCER : action.payload : ", action.payload);
+  console.log("---------------------------------------------------");
   // console.log("collapse reducer : ", state);
   switch (action.type) {
     case "SHOW_ROOMS":
       return action.payload;
-    case "ADD_ROOM":
+    case "ADD_ROOM_FLAG":
+      return action.payload;
+    case "SUCCESS_FLAG":
+      return action.payload;
+    case "EDIT_FLAG":
+      return action.payload;
+    case "ADD_OR_UPDATE":
       return action.payload;
     default:
       return state;
