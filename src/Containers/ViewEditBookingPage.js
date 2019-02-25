@@ -13,6 +13,7 @@ class ViewEditBookingPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+
     this.goToHomePage = this.goToHomePage.bind(this);
     this.callUpdate = this.callUpdate.bind(this);
     this.callDelete = this.callDelete.bind(this);
@@ -130,13 +131,15 @@ class ViewEditBookingPage extends React.Component {
           </div>
         </div>
         {bookedEmpData}
+        <hr />
       </div>
     );
   }
 }
 function mapStateToProps(state) {
   return {
-    selectedRoomDetails: state.selectedRoomDetails
+    selectedRoomDetails: state.selectedRoomDetails,
+    roomsList: state.roomsList
   };
 }
 function mapDispatchToProps(dispatch) {

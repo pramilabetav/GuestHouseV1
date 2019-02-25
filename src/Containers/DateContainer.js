@@ -122,7 +122,7 @@ class DateContainer extends React.Component {
         </div>
         <hr />
         <div>
-          <label>{dates}</label>
+          <label className="pageTitle">{dates}</label>
         </div>
       </div>
     );

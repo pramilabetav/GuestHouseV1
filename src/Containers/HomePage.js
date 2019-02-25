@@ -14,6 +14,7 @@ class HomePage extends React.Component {
     console.log(this.props.showRoomFlag);
     console.log("--------------------------------------------------");
     // <ViewEditBookingPage />
+
     return (
       <div className="container">
         {this.props.showRoomFlag.editFlag ? (

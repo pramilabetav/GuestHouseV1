@@ -82,6 +82,238 @@ const initialState = {
           CheckOutDate: "05-03-2019"
         }
       ]
+    },
+    {
+      RoomID: "107",
+      FloorName: "Floor1",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "201",
+      FloorName: "Floor2",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "202",
+      FloorName: "Floor2",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "203",
+      FloorName: "Floor2",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "204",
+      FloorName: "Floor2",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "205",
+      FloorName: "Floor2",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "206",
+      FloorName: "Floor2",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "207",
+      FloorName: "Floor2",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "301",
+      FloorName: "Floor3",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "302",
+      FloorName: "Floor3",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "303",
+      FloorName: "Floor3",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "304",
+      FloorName: "Floor3",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "305",
+      FloorName: "Floor3",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "306",
+      FloorName: "Floor3",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "307",
+      FloorName: "Floor3",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "401",
+      FloorName: "Floor4",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "402",
+      FloorName: "Floor4",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "403",
+      FloorName: "Floor4",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "404",
+      FloorName: "Floor4",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "405",
+      FloorName: "Floor4",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "406",
+      FloorName: "Floor4",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "407",
+      FloorName: "Floor4",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "501",
+      FloorName: "Floor2",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "502",
+      FloorName: "Floor2",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "503",
+      FloorName: "Floor2",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "504",
+      FloorName: "Floor2",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "505",
+      FloorName: "Floor2",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "506",
+      FloorName: "Floor2",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
+    },
+    {
+      RoomID: "507",
+      FloorName: "Floor2",
+      RoomType: "Shared",
+      ActiveStatus: "A",
+      Capacity: "2",
+      BookedEmployeeDetails: []
     }
   ]
 };
@@ -114,37 +346,43 @@ export default function showRoomsList(state = initialState, action) {
       );
       let localvar;
       state.RoomData.map((room, i) => {
-        // room.BookedEmployeeDetails.map((employee, i) => {
-        //   console.log(
-        //     "INSIDE MAP employee.EmployeeID-->",
-        //     employee.EmployeeID,
-        //     " action.payload.employeeDetails.EmployeeID",
-        //     action.payload.employeeDetails.EmployeeID
+        console.log("room -> ", room);
+        room.BookedEmployeeDetails.map((employee, i) => {
+          console.log(
+            "INSIDE MAP employee.EmployeeID-->",
+            employee.EmployeeID,
+            " action.payload.employeeDetails.EmployeeID",
+            action.payload.employeeDetails.EmployeeID
+          );
+          if (employee.EmployeeID) {
+            if (
+              employee.EmployeeID === action.payload.employeeDetails.EmployeeID
+            ) {
+              console.log("TRUE --->", i);
+              // room.BookedEmployeeDetails[i].pop(employee.EmployeeID);
+              // delete room.BookedEmployeeDetails[i];
+              room.BookedEmployeeDetails.splice(i, i + 1);
+            }
+          }
+        });
+        console.log("AFTER FILTER room MAP --> ", state.RoomData);
+        //   localvar = room.BookedEmployeeDetails.splice(
+        //     employee =>
+        //       employee.EmployeeID !== action.payload.employeeDetails.EmployeeID
         //   );
-        //   if (
-        //     employee.EmployeeID ===
-        //     action.payload.employeeDetails.employeeDetails
-        //   ) {
-        //   }
+        //   console.log("AFTER FILTER room MAP --> ", localvar);
+        //   return { room };
         // });
 
-        localvar = room.BookedEmployeeDetails.splice(
-          employee =>
-            employee.EmployeeID !== action.payload.employeeDetails.EmployeeID
-        );
-        console.log("AFTER FILTER room MAP --> ", localvar);
-        return { room };
+        // let newRoom = state.RoomData.filter(
+        //   room =>
+        //     room.BookedEmployeeDetails.filter(
+        //       employee =>
+        //         employee.EmployeeID !== action.payload.employeeDetails.EmployeeID
+        //     ).length === 0
       });
 
-      let newRoom = state.RoomData.filter(
-        room =>
-          room.BookedEmployeeDetails.filter(
-            employee =>
-              employee.EmployeeID !== action.payload.employeeDetails.EmployeeID
-          ).length === 0
-      );
-
-      console.log("ROOMDATA AFTER MAP CALL newRoom---------> ", newRoom);
+      // console.log("ROOMDATA AFTER MAP CALL newRoom---------> ", newRoom);
       return { RoomData: state.RoomData };
     case "UPDATE_EMPLOYEE":
       console.log("PUMMY ---> UPDATE_EMPLOYEE check action.payload  :");

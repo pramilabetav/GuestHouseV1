@@ -40,6 +40,7 @@
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
+  margin: 3px 0;
 }
 .room-vacant:hover {
   background: #27ae60;
@@ -70,6 +71,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 .roomDetails {
   display: flex;
@@ -117,7 +119,7 @@
 }
 .pageTitle {
   font-size: 25px;
-  font-weight: bold;
+  font-weight: 300;
   color: #0984e3;
   margin-bottom: 20px;
 }
@@ -205,6 +207,7 @@
 }
 .legendInfo {
   font-size: 13px;
+  padding-left: 10px;
 }
 .logo {
   width: 40px;
@@ -215,4 +218,31 @@
   font-size: 40px;
   text-align: center;
   color: lightcoral;
+}
+.big-icon {
+  width: 100px;
+  height: auto;
+}
+.label-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.labelValue {
+  font-weight: 500;
+}
+.message {
+  font-weight: 300;
+}
+label {
+  font-weight: 300;
+}
+.bookingConfirmation {
+  background-color: #f1f2f6;
+}
+.listView:hover {
+  background-color: #c7ecee;
+}
+.legend {
+  display: flex;
 }

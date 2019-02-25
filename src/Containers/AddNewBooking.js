@@ -182,7 +182,9 @@ class AddNewBooking extends React.Component {
         <div className="col-sm-6 addRoom">
           <div className="form-group">
             <label>
-              <button onClick={this.goToHomePage}>Back </button>
+              <a href="#" onClick={this.goToHomePage}>
+                Back{" "}
+              </a>
             </label>
           </div>
           <div className="form-group">

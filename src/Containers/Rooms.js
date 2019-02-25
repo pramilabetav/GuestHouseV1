@@ -12,6 +12,7 @@ class Rooms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.goToHomePage = this.goToHomePage.bind(this);
     this.callAddNewBooking = this.callAddNewBooking.bind(this);
     this.callViewEditPage = this.callViewEditPage.bind(this);
   }
@@ -24,6 +25,10 @@ class Rooms extends React.Component {
   callViewEditPage(room) {
     this.props.showViewEditBookingPage(false, false, true);
     this.props.selectedRoomDetails(room);
+  }
+  goToHomePage() {
+    // console.log("CAll action to go to HomePage");
+    this.props.showAddRoomsBookingPage(false, false);
   }
   render() {
     console.log("ROOM_COMPONENT: printing roomdata value === ");
@@ -68,6 +73,13 @@ class Rooms extends React.Component {
       <div className="roomAvailability">
         <div className="row">
           <div className="col-sm-12">
+            <a href="#" onClick={this.goToHomePage}>
+              Back
+            </a>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-12">
             <h1 className="pageTitle">Room Availability</h1>
           </div>
         </div>
@@ -76,18 +88,18 @@ class Rooms extends React.Component {
         </div>
         <hr />
         <div className="row">
-          <div className="col-sm-2">
+          <div className="col-sm-4 legend">
             <div className="legend-available" />
             <label className="legendInfo">Available</label>
           </div>
-          <div className="col-sm-2">
+          <div className="col-sm-4 legend">
             <div className="legend-partial" />
             <label className="legendInfo">
               1 Person Accomodation Available
             </label>
           </div>
 
-          <div className="col-sm-2">
+          <div className="col-sm-4 legend">
             <div className="legend-full" />
             <label className="legendInfo">Not Available</label>
           </div>
