@@ -9,6 +9,16 @@ export function showRoomsContainer(checkInDate, checkOutDate, flag) {
     }
   };
 }
+export function filterRoomData(checkInDate, checkOutDate) {
+  return {
+    type: "FILTER_ROOMDATA",
+    payload: {
+      checkInDate,
+      checkOutDate
+    }
+  };
+}
+
 export function selectedEmployeeDetails(employeeDetails) {
   return {
     type: "SELECTED_EMPLOYEE",
@@ -63,6 +73,12 @@ export function showAddRoomsBookingPage(addRoomFlag, roomFlag) {
       addRoomFlag: addRoomFlag,
       roomFlag: roomFlag
     }
+  };
+}
+
+export function resetRoomDataValue() {
+  return {
+    type: "RESET_ROOMDATA"
   };
 }
 

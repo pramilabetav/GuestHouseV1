@@ -1,8 +1,9 @@
 import React from "react";
 // import { bindActionCreators } from "redux";
+import moment from "moment";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { showRoomsContainer } from "../Actions";
+import { showRoomsContainer, filterRoomData } from "../Actions";
 let dates;
 class DateContainer extends React.Component {
   constructor(props) {
@@ -63,6 +64,11 @@ class DateContainer extends React.Component {
         this.state.checkInDateValue,
         this.state.checkOutDateValue,
         true
+      );
+      //call action to store filter RoomData
+      this.props.filterRoomData(
+        moment(this.state.checkInDateValue).format("MM-DD-YYYY"),
+        moment(this.state.checkOutDateValue).format("MM-DD-YYYY")
       );
       dates =
         "Your search from " +
@@ -131,7 +137,7 @@ class DateContainer extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { showRoomsContainer: showRoomsContainer },
+    { showRoomsContainer: showRoomsContainer, filterRoomData: filterRoomData },
     dispatch
   );
 }
