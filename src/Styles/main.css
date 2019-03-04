@@ -109,7 +109,7 @@
   width: 100%;
   border-bottom: 1px solid lightgray;
   padding: 10px;
-  height: 60px;
+  height: auto;
   margin-bottom: 30px;
   display: flex;
   flex-direction: row;

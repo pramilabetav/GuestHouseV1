@@ -13,7 +13,9 @@ import {
 class Rooms extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      pummyData: []
+    };
     this.goToHomePage = this.goToHomePage.bind(this);
     this.callAddNewBooking = this.callAddNewBooking.bind(this);
     this.callViewEditPage = this.callViewEditPage.bind(this);
@@ -33,15 +35,58 @@ class Rooms extends React.Component {
     this.props.showAddRoomsBookingPage(false, false);
     // this.props.resetRoomDataValue();
   }
+  componentDidMount() {
+    console.log(
+      "CALLING this.props.roomsList.RoomData  ##########",
+      this.props.roomsList.RoomData
+    );
+    let filterData = JSON.parse(JSON.stringify(this.props.roomsList.RoomData));
+    let localVar = filterData.map((room, i) => {
+      room.BookedEmployeeDetails = room.BookedEmployeeDetails.filter(
+        employee => {
+          console.log("employee.CheckInDate : ", employee.CheckInDate);
+          console.log(
+            "this.props.showRoomFlag.checkInDate : ",
+            moment(this.props.showRoomFlag.checkInDate).format("MM-DD-YYYY")
+          );
+          if (
+            employee.CheckInDate ==
+            moment(this.props.showRoomFlag.checkInDate).format("MM-DD-YYYY")
+          ) {
+            return employee;
+          }
+        }
+      );
+      return room;
+    });
+    this.setState({
+      pummyData: [
+        ...this.state.pummyData,
+        ...JSON.parse(JSON.stringify(localVar))
+      ]
+    });
+    console.log("ComponentDidMount --> After Filter : localVar = ", localVar);
+    console.log(
+      "ComponentDidMount --> After Filter : this.state.pummyData = ",
+      this.state.pummyData
+    );
+  }
   render() {
     console.log("ROOM_COMPONENT: printing showRoomFlag value === ");
     console.log(this.props.showRoomFlag);
+    console.log(
+      "ROOM_COMPONENT: RENDER method pummyData value === ",
+      this.state.pummyData
+    );
     console.log("*********************************************");
     let selectClass;
     // let counter = 0;
     // let returnMatchedRoom;
+    // this.state.pummyData[0].map((pummy, i) => {
+    //   console.log("CHECKING +++++ ", pummy);
+    // });
 
-    var returnRoomDisplayData = this.props.roomsList.RoomData.map((room, i) => {
+    var returnRoomDisplayData = this.state.pummyData.map((room, i) => {
       // room.BookedEmployeeDetails.map((employee, i) => {
       //   if (employee.CheckInDate) {
       //     returnMatchedRoom = room.BookedEmployeeDetails.filter(

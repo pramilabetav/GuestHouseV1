@@ -429,66 +429,46 @@ export default function showRoomsList(
         return { RoomData: state.RoomData };
       });
       return { RoomData: state.RoomData };
-    case "RESET_ROOMDATA":
-      // const staticState = initialState.slice().sort();
-      // console.log("PUMMY ---> RESET_ROOMDATA check action.payload  :");
-      // console.log("staticState --> ", staticState);
-      // console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-      // //state.RoomData = [...filterData.RoomData];
-      // console.log(
-      //   "Checking Equality --> ",
-      //   staticState.RoomData === state.RoomData
-      // );
-      console.log("Sholdnt get called --> ", state.RoomData);
-      console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-      return { RoomData: state.RoomData };
+    // case "RESET_ROOMDATA":
+    // const staticState = initialState.slice().sort();
+    // console.log("PUMMY ---> RESET_ROOMDATA check action.payload  :");
+    // console.log("staticState --> ", staticState);
+    // console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+    // //state.RoomData = [...filterData.RoomData];
+    // console.log(
+    //   "Checking Equality --> ",
+    //   staticState.RoomData === state.RoomData
+    // );
+    // console.log("Sholdnt get called --> ", state.RoomData);
+    // console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+    // return { RoomData: state.RoomData };
     case "FILTER_ROOMDATA":
-      // const staticState = [...state.RoomData];
-      const fruitsArray = [
-        {
-          id: "101",
-          name: "orange",
-          colors: [{ col: "RED" }, { col: "GREEN" }]
-        },
-        {
-          id: "102",
-          name: "Apple",
-          colors: [{ col: "RED" }, { col: "GREEN" }]
-        }
-      ];
-      const copyArray = [...fruitsArray];
-      console.log("BEFORE filter EQUALITY : ", copyArray === fruitsArray);
-      console.log("FRUITSARRAY = ", fruitsArray);
-      console.log("COPYARRAY = ", copyArray);
-      const returnArray = copyArray.map((copyA, i) => {
-        copyA.colors = copyA.colors.filter(colorF => colorF.col === "RED");
-        return copyA;
-      });
-      console.log("CHECKING EQUALITY : ", copyArray === fruitsArray);
-      console.log("FRUITSARRAY = ", fruitsArray);
-      console.log("COPYARRAY = ", copyArray);
-      console.log("returnArray = ", returnArray);
+      let filterData = JSON.parse(JSON.stringify(state.RoomData));
       console.log("************************************************");
-      let staticState = { ...state };
       console.log("PUMMY ---> FILTER_ROOMDATA check action.payload  :");
       console.log(action.payload);
-      console.log("statiState -----> ", staticState);
+      console.log("Before State.RoomData -----> ", state.RoomData);
+      console.log("Before FilterData : ", filterData);
       console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-      staticState.RoomData = state.RoomData.map((room, i) => {
-        room.BookedEmployeeDetails.map((employee, i) => {
-          if (employee.CheckInDate) {
-            room.BookedEmployeeDetails = room.BookedEmployeeDetails.filter(
-              employee => employee.CheckInDate === action.payload.checkInDate
-            );
-          }
-        });
-        return { ...room };
-      });
-      const NewState = Object.assign({}, staticState);
-      staticState = {};
-      console.log("AFTER MAP staticState ============> ", staticState);
-      return { ...state, RoomData: NewState.RoomData };
+      // staticState.RoomData = state.RoomData.map((room, i) => {
+      // filterData.map((room, i) => {
+      //   room.BookedEmployeeDetails = room.BookedEmployeeDetails.filter(
+      //     employee => {
+      //       console.log("employee.CheckInDate = ", employee.CheckInDate);
+      //       console.log(
+      //         "action.payload.checkInDate = ",
+      //         action.payload.checkInDate
+      //       );
+      //       if (employee.CheckInDate == action.payload.checkInDate) {
+      //         return employee;
+      //       }
+      //     }
+      //   );
+      // });
+      // console.log("New After filterData : ", filterData);
+      return { RoomData: filterData };
     default:
+      console.log("Default state is initialState -->", state);
       return state;
   }
 }
