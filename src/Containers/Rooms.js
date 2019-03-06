@@ -14,7 +14,8 @@ class Rooms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pummyData: []
+      pummyData: [],
+      filterData: []
     };
     this.goToHomePage = this.goToHomePage.bind(this);
     this.callAddNewBooking = this.callAddNewBooking.bind(this);
@@ -36,22 +37,34 @@ class Rooms extends React.Component {
     // this.props.resetRoomDataValue();
   }
   componentDidMount() {
+    let filterData = [];
+    // console.log(
+    //   "CALLING this.props.roomsList.RoomData  ##########",
+    //   this.props.roomsList.RoomData,
+    //   "   BEFORE assigning filterDAta : ",
+    //   filterData
+    // );
+    filterData = [
+      ...this.state.filterData,
+      ...JSON.parse(JSON.stringify(this.props.roomsList.RoomData))
+    ];
     console.log(
-      "CALLING this.props.roomsList.RoomData  ##########",
-      this.props.roomsList.RoomData
+      "CALLING componenetDidMount this.props.roomsList.RoomData : ",
+      this.props.roomsList.RoomData,
+      " and filterDAta : ",
+      filterData
     );
-    let filterData = JSON.parse(JSON.stringify(this.props.roomsList.RoomData));
     let localVar = filterData.map((room, i) => {
       room.BookedEmployeeDetails = room.BookedEmployeeDetails.filter(
         employee => {
           console.log("employee.CheckInDate : ", employee.CheckInDate);
           console.log(
             "this.props.showRoomFlag.checkInDate : ",
-            moment(this.props.showRoomFlag.checkInDate).format("MM-DD-YYYY")
+            moment(this.props.selectedDates.checkInDate).format("MM-DD-YYYY")
           );
           if (
-            employee.CheckInDate ==
-            moment(this.props.showRoomFlag.checkInDate).format("MM-DD-YYYY")
+            moment(employee.CheckInDate).format("MM-DD-YYYY") ==
+            moment(this.props.selectedDates.checkInDate).format("MM-DD-YYYY")
           ) {
             return employee;
           }
@@ -65,6 +78,13 @@ class Rooms extends React.Component {
         ...JSON.parse(JSON.stringify(localVar))
       ]
     });
+    localVar = [];
+    console.log(
+      "ComponentDidMount --> After Filter : filterData = ",
+      filterData,
+      " localVar : ",
+      localVar
+    );
     console.log("ComponentDidMount --> After Filter : localVar = ", localVar);
     console.log(
       "ComponentDidMount --> After Filter : this.state.pummyData = ",
@@ -145,10 +165,22 @@ class Rooms extends React.Component {
         </div>
         <div className="row">
           <div className="col-sm-12">
-            <h1 className="pageTitle">Room Availability for </h1>
+            <h1 className="info">Room Availability for </h1>
             <hr />
-            <h2>{this.props.showRoomFlag.checkInDate}</h2>
-            <h2>{this.props.showRoomFlag.checkOutDate}</h2>
+            <label className="info">Search for </label>
+            <label className="info">
+              {moment(this.props.selectedDates.checkInDate).format(
+                "DD-MMM-YYYY"
+              )}
+            </label>
+            <label className="info"> to </label>
+            <label className="info">
+              {moment(this.props.selectedDates.checkOutDate).format(
+                "DD-MMM-YYYY"
+              )}
+            </label>
+
+            <h2 />
           </div>
         </div>
         <div className="row">
@@ -180,7 +212,8 @@ class Rooms extends React.Component {
 function mapStateToProps(state) {
   return {
     roomsList: state.roomsList,
-    showRoomFlag: state.showRoomFlag
+    showRoomFlag: state.showRoomFlag,
+    selectedDates: state.dateReducer
   };
 }
 

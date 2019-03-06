@@ -1,11 +1,14 @@
 import React from "react";
 import { bindActionCreators } from "redux";
+import moment from "moment";
 //import { editSelectedBooking, deleteSelectedBooking } from "../Actions";
 import {
   showAddRoomsBookingPage,
   selectedEmployeeDetails,
   deleteEmployeeDetails,
-  setAddOrUpdateFlag
+  setAddOrUpdateFlag,
+  deleteSelectedRoomData,
+  filterRoomData
 } from "../Actions";
 import { connect } from "react-redux";
 
@@ -20,6 +23,20 @@ class ViewEditBookingPage extends React.Component {
   }
   goToHomePage() {
     // console.log("CAll action to go to HomePage");
+    // this.props.showRoomsContainer(
+    //   this.state.checkInDateValue,
+    //   this.state.checkOutDateValue,
+    //   true
+    // );
+    console.log("Show Room flag : ", this.props.selectedDates);
+    console.log(
+      "CheckinDate : ViewEditBookingPage : ",
+      moment(this.props.selectedDates.checkInDate).format("YYYY-MM-DD")
+    );
+    this.props.filterRoomData(
+      moment(this.props.selectedDates.checkInDate).format("YYYY-MM-DD"),
+      moment(this.props.selectedDates.checkOutDate).format("YYYY-MM-DD")
+    );
     this.props.showAddRoomsBookingPage(false, true);
   }
   callUpdate(employeeDetail) {
@@ -31,9 +48,13 @@ class ViewEditBookingPage extends React.Component {
   callDelete(employeeDetail) {
     // this.props.selectedEmployeeDetails(employeeDetail);
     this.props.deleteEmployeeDetails(employeeDetail);
+    this.props.deleteSelectedRoomData(
+      this.props.selectedRoomDetails,
+      employeeDetail
+    );
   }
   render() {
-    console.log("selectedRoomDetails");
+    console.log("selectedRoomDetails --> ");
     console.log(this.props.selectedRoomDetails);
     let empLen = this.props.selectedRoomDetails.selectedRoom
       .BookedEmployeeDetails.length;
@@ -139,7 +160,9 @@ class ViewEditBookingPage extends React.Component {
 function mapStateToProps(state) {
   return {
     selectedRoomDetails: state.selectedRoomDetails,
-    roomsList: state.roomsList
+    roomsList: state.roomsList,
+    showRoomFlag: state.showRoomFlag,
+    selectedDates: state.dateReducer
   };
 }
 function mapDispatchToProps(dispatch) {
@@ -148,7 +171,9 @@ function mapDispatchToProps(dispatch) {
       showAddRoomsBookingPage: showAddRoomsBookingPage,
       selectedEmployeeDetails: selectedEmployeeDetails,
       deleteEmployeeDetails: deleteEmployeeDetails,
-      setAddOrUpdateFlag: setAddOrUpdateFlag
+      setAddOrUpdateFlag: setAddOrUpdateFlag,
+      deleteSelectedRoomData: deleteSelectedRoomData,
+      filterRoomData: filterRoomData
     },
     dispatch
   );

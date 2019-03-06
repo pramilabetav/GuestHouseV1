@@ -46,6 +46,21 @@ export function deleteEmployeeDetails(employeeDetails) {
     }
   };
 }
+export function deleteSelectedRoomData(selectedRoomData, employeeDetails) {
+  console.log(
+    "Action : DELETE_EMPLOYEE selectedRoomData : ",
+    selectedRoomData,
+    " employeeeDetails : ",
+    employeeDetails
+  );
+  return {
+    type: "DELETE_SELECTED_ROOM_EMPLOYEE",
+    payload: {
+      selectedRoomData,
+      employeeDetails
+    }
+  };
+}
 
 export function setAddOrUpdateFlag(
   addRoomFlag,
@@ -131,6 +146,18 @@ export function showSuccessPage(successFlag) {
     type: "SUCCESS_FLAG",
     payload: {
       successFlag
+    }
+  };
+}
+
+export function selectedDate(checkInDate, checkOutDate) {
+  console.log("Action : SELECTED_DATES", checkInDate, " , ", checkOutDate);
+
+  return {
+    type: "SELECTED_DATES",
+    payload: {
+      checkInDate: checkInDate,
+      checkOutDate: checkOutDate
     }
   };
 }

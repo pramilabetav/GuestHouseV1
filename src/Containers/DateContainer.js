@@ -3,7 +3,7 @@ import React from "react";
 import moment from "moment";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { showRoomsContainer, filterRoomData } from "../Actions";
+import { showRoomsContainer, filterRoomData, selectedDate } from "../Actions";
 let dates;
 class DateContainer extends React.Component {
   constructor(props) {
@@ -58,7 +58,13 @@ class DateContainer extends React.Component {
     //     "  checkOutDateFlag : " +
     //     this.state.checkOutDateFlag
     // );
+
     if (this.state.checkInDateFlag && this.state.checkOutDateFlag) {
+      //Set the dates
+      this.props.selectedDate(
+        this.state.checkInDateValue,
+        this.state.checkOutDateValue
+      );
       //Call the Action
       this.props.showRoomsContainer(
         this.state.checkInDateValue,
@@ -67,9 +73,10 @@ class DateContainer extends React.Component {
       );
       //call action to store filter RoomData
       this.props.filterRoomData(
-        moment(this.state.checkInDateValue).format("MM-DD-YYYY"),
-        moment(this.state.checkOutDateValue).format("MM-DD-YYYY")
+        moment(this.state.checkInDateValue).format("YYYY-MM-DD"),
+        moment(this.state.checkOutDateValue).format("YYYY-MM-DD")
       );
+
       dates =
         "Your search from " +
         this.state.checkInDateValue +
@@ -137,7 +144,11 @@ class DateContainer extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { showRoomsContainer: showRoomsContainer, filterRoomData: filterRoomData },
+    {
+      showRoomsContainer: showRoomsContainer,
+      filterRoomData: filterRoomData,
+      selectedDate: selectedDate
+    },
     dispatch
   );
 }

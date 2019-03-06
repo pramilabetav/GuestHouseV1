@@ -84,12 +84,12 @@ class AddNewBooking extends React.Component {
     // console.log(document.getElementsByName("checkIn"));
     // console.log("TYPE OF == " + typeof document.getElementsByName("checkIn"));
     this.setState({
-      checkIn: e.target.value
+      checkIn: moment(e.target.value).format("YYYY-MM-DD")
     });
   }
   handle_checkOut(e) {
     this.setState({
-      checkOut: e.target.value
+      checkOut: moment(e.target.value).format("YYYY-MM-DD")
     });
   }
   handle_empId(e) {
@@ -129,6 +129,7 @@ class AddNewBooking extends React.Component {
   }
   handleSubmit(e) {
     let updatedEmployeeObject;
+    console.log("ADDNEWCOMPNENT : this.state.checkIn : ", this.state.checkIn);
     if (this.state.empId !== "") {
       updatedEmployeeObject = {
         EmployeeName: this.state.empName,

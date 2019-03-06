@@ -371,30 +371,12 @@ export default function showRoomsList(
               employee.EmployeeID === action.payload.employeeDetails.EmployeeID
             ) {
               console.log("TRUE --->", i);
-              // room.BookedEmployeeDetails[i].pop(employee.EmployeeID);
-              // delete room.BookedEmployeeDetails[i];
               room.BookedEmployeeDetails.splice(i, i + 1);
             }
           }
         });
-        console.log("AFTER FILTER room MAP --> ", state.RoomData);
-        //   localvar = room.BookedEmployeeDetails.splice(
-        //     employee =>
-        //       employee.EmployeeID !== action.payload.employeeDetails.EmployeeID
-        //   );
-        //   console.log("AFTER FILTER room MAP --> ", localvar);
-        //   return { room };
-        // });
-
-        // let newRoom = state.RoomData.filter(
-        //   room =>
-        //     room.BookedEmployeeDetails.filter(
-        //       employee =>
-        //         employee.EmployeeID !== action.payload.employeeDetails.EmployeeID
-        //     ).length === 0
+        console.log("Swapy : AFTER FILTER room MAP --> ", state.RoomData);
       });
-
-      // console.log("ROOMDATA AFTER MAP CALL newRoom---------> ", newRoom);
       return { RoomData: state.RoomData };
     case "UPDATE_EMPLOYEE":
       console.log("PUMMY ---> UPDATE_EMPLOYEE check action.payload  :");
@@ -443,7 +425,11 @@ export default function showRoomsList(
     // console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
     // return { RoomData: state.RoomData };
     case "FILTER_ROOMDATA":
-      let filterData = JSON.parse(JSON.stringify(state.RoomData));
+      let filterData = [];
+      filterData = [
+        ...filterData,
+        ...JSON.parse(JSON.stringify(state.RoomData))
+      ];
       console.log("************************************************");
       console.log("PUMMY ---> FILTER_ROOMDATA check action.payload  :");
       console.log(action.payload);

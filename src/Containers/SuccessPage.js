@@ -10,7 +10,7 @@ class SuccessPage extends React.Component {
     this.handle_click = this.handle_click.bind(this);
   }
   handle_click() {
-    this.props.showAddRoomsBookingPage(false, true);
+    this.props.showAddRoomsBookingPage(false, false);
   }
   render() {
     // console.log("CONGRATULATIONS PAGE : ", this.props.roomsList);
