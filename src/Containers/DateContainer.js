@@ -20,46 +20,27 @@ class DateContainer extends React.Component {
   }
 
   validCheckInDate(e) {
-    // console.log("checkInDateValue : ");
-    // console.log(e.target.value);
-    // if (
-    //   e.target.value === null ||
-    //   e.target.value === "" ||
-    //   !Date.parse(e.target.value)
-    // ) {
-    //   alert("Please select Dates");
-    // } else {
+    console.log("validCheckInDate --> ", e.target.value);
     this.setState({
       checkInDateValue: e.target.value,
       checkInDateFlag: true
     });
-    //}
   }
   validCheckOutDate(e) {
-    // console.log("checkOutDateValue : ");
-    // console.log(e.target.value);
-    // if (
-    //   e.target.value === null ||
-    //   e.target.value === "" ||
-    //   !Date.parse(e.target.value)
-    // ) {
-    //   alert("Please select Dates");
-    // } else {
     this.setState({
       checkOutDateValue: e.target.value,
       checkOutDateFlag: true
     });
-    //}
   }
   handleSearch(e) {
-    // console.log(
-    //   "What are the values of checkInDateFlag : " +
-    //     this.state.checkInDateFlag +
-    //     "  checkOutDateFlag : " +
-    //     this.state.checkOutDateFlag
-    // );
-
+    console.log("Calling handleSearch", e);
+    console.log(
+      "VAlues of checkindate and checkout date : ",
+      this.state.checkInDateFlag,
+      this.state.checkOutDateFlag
+    );
     if (this.state.checkInDateFlag && this.state.checkOutDateFlag) {
+      console.log("INSIDE IF");
       //Set the dates
       this.props.selectedDate(
         this.state.checkInDateValue,
@@ -76,19 +57,36 @@ class DateContainer extends React.Component {
         moment(this.state.checkInDateValue).format("YYYY-MM-DD"),
         moment(this.state.checkOutDateValue).format("YYYY-MM-DD")
       );
-
       dates =
         "Your search from " +
         this.state.checkInDateValue +
         " to " +
         this.state.checkOutDateValue;
       // console.log("Message : " + dates);
+      console.log("END of IF");
     } else {
       dates = "Please selecte check in and check out dates";
       // console.log("Message : " + dates);
     }
   }
-
+  componentDidMount() {
+    console.log(
+      "DateContainer : VALUE of selectedDate :  ",
+      this.props.selectedDateReducer
+    );
+    if (this.props.selectedDateReducer) {
+      this.setState({
+        checkInDateValue: moment(
+          this.props.selectedDateReducer.checkInDate
+        ).format("YYYY-MM-DD"),
+        checkOutDateValue: moment(
+          this.props.selectedDateReducer.checkOutDate
+        ).format("YYYY-MM-DD"),
+        checkInDateFlag: true,
+        checkOutDateFlag: true
+      });
+    }
+  }
   render() {
     return (
       <div className="date_search">
@@ -141,7 +139,11 @@ class DateContainer extends React.Component {
     );
   }
 }
-
+function mapStateToProps(state) {
+  return {
+    selectedDateReducer: state.dateReducer
+  };
+}
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
@@ -154,6 +156,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(DateContainer);
