@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { showAddRoomsBookingPage } from "../Actions";
+import { setRoomsFlagAction } from "../Actions";
 
 class SuccessPage extends React.Component {
   constructor(props) {
@@ -10,10 +10,9 @@ class SuccessPage extends React.Component {
     this.handle_click = this.handle_click.bind(this);
   }
   handle_click() {
-    this.props.showAddRoomsBookingPage(false, false);
+    this.props.setRoomsFlagAction(false, false, false, false, "");
   }
   render() {
-    // console.log("CONGRATULATIONS PAGE : ", this.props.roomsList);
     return (
       <div className="confirmationDetails">
         <div className="row ">
@@ -95,7 +94,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { showAddRoomsBookingPage: showAddRoomsBookingPage },
+    { setRoomsFlagAction: setRoomsFlagAction },
     dispatch
   );
 }

@@ -3,7 +3,7 @@ import React from "react";
 import moment from "moment";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { showRoomsContainer, filterRoomData, selectedDate } from "../Actions";
+import { setRoomsFlagAction, filterRoomData, selectedDate } from "../Actions";
 let dates;
 class DateContainer extends React.Component {
   constructor(props) {
@@ -20,7 +20,6 @@ class DateContainer extends React.Component {
   }
 
   validCheckInDate(e) {
-    console.log("validCheckInDate --> ", e.target.value);
     this.setState({
       checkInDateValue: e.target.value,
       checkInDateFlag: true
@@ -33,47 +32,24 @@ class DateContainer extends React.Component {
     });
   }
   handleSearch(e) {
-    console.log("Calling handleSearch", e);
-    console.log(
-      "VAlues of checkindate and checkout date : ",
-      this.state.checkInDateFlag,
-      this.state.checkOutDateFlag
-    );
     if (this.state.checkInDateFlag && this.state.checkOutDateFlag) {
-      console.log("INSIDE IF");
       //Set the dates
       this.props.selectedDate(
         this.state.checkInDateValue,
         this.state.checkOutDateValue
       );
       //Call the Action
-      this.props.showRoomsContainer(
-        this.state.checkInDateValue,
-        this.state.checkOutDateValue,
-        true
-      );
-      //call action to store filter RoomData
-      this.props.filterRoomData(
-        moment(this.state.checkInDateValue).format("YYYY-MM-DD"),
-        moment(this.state.checkOutDateValue).format("YYYY-MM-DD")
-      );
+      this.props.setRoomsFlagAction(true);
       dates =
         "Your search from " +
         this.state.checkInDateValue +
         " to " +
         this.state.checkOutDateValue;
-      // console.log("Message : " + dates);
-      console.log("END of IF");
     } else {
       dates = "Please selecte check in and check out dates";
-      // console.log("Message : " + dates);
     }
   }
   componentDidMount() {
-    console.log(
-      "DateContainer : VALUE of selectedDate :  ",
-      this.props.selectedDateReducer
-    );
     if (this.props.selectedDateReducer) {
       this.setState({
         checkInDateValue: moment(
@@ -147,7 +123,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      showRoomsContainer: showRoomsContainer,
+      setRoomsFlagAction: setRoomsFlagAction,
       filterRoomData: filterRoomData,
       selectedDate: selectedDate
     },

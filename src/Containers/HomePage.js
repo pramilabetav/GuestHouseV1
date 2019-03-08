@@ -10,11 +10,6 @@ import ViewEditBookingPage from "./ViewEditBookingPage";
 class HomePage extends React.Component {
   //create a function to return specific component to display
   render() {
-    console.log("Kya ho rha he ye flag k sath : ");
-    console.log(this.props.showRoomFlag);
-    console.log("--------------------------------------------------");
-    // <ViewEditBookingPage />
-
     return (
       <div className="container">
         {this.props.showRoomFlag.editFlag ? (

@@ -1,14 +1,78 @@
-export function showRoomsContainer(checkInDate, checkOutDate, flag) {
-  console.log("Action : SHOW_ROOMS", flag);
+export function setRoomsFlagAction(
+  roomFlag,
+  addRoomFlag,
+  editFlag,
+  successFlag,
+  addOrUpdate
+) {
+  console.log(
+    "Action : SET_ROOMS_FLAG",
+    roomFlag,
+    addRoomFlag,
+    editFlag,
+    successFlag,
+    addOrUpdate
+  );
   return {
-    type: "SHOW_ROOMS",
+    type: "SET_ROOMS_FLAG",
     payload: {
-      checkInDate: checkInDate,
-      checkOutDate: checkOutDate,
-      roomFlag: flag
+      addRoomFlag: addRoomFlag,
+      roomFlag: roomFlag,
+      editFlag: editFlag,
+      successFlag: successFlag,
+      addOrUpdate: addOrUpdate
     }
   };
 }
+// export function showAddRoomsBookingPage(addRoomFlag, roomFlag) {
+//   console.log("Action : ADD_ROOM_FLAG", roomFlag);
+//   return {
+//     type: "ADD_ROOM_FLAG",
+//     payload: {
+//       addRoomFlag: addRoomFlag,
+//       roomFlag: roomFlag
+//     }
+//   };
+// }
+// export function showViewEditBookingPage(addRoomFlag, roomFlag, editFlag) {
+//   console.log("Action : EDIT_FLAG", editFlag);
+//   return {
+//     type: "EDIT_FLAG",
+//     payload: {
+//       addRoomFlag: addRoomFlag,
+//       roomFlag: roomFlag,
+//       editFlag: editFlag
+//     }
+//   };
+// }
+// export function showSuccessPage(successFlag) {
+//   console.log("Action : SUCCESS_FLAG", successFlag);
+
+//   return {
+//     type: "SUCCESS_FLAG",
+//     payload: {
+//       successFlag
+//     }
+//   };
+// }
+// export function setAddOrUpdateFlag(
+//   addRoomFlag,
+//   roomFlag,
+//   editFlag,
+//   addOrUpdate
+// ) {
+//   console.log("Action : ADD_OR_UPDATE", addOrUpdate);
+//   return {
+//     type: "ADD_OR_UPDATE",
+//     payload: {
+//       addRoomFlag: addRoomFlag,
+//       roomFlag: roomFlag,
+//       editFlag: editFlag,
+//       addOrUpdate: addOrUpdate
+//     }
+//   };
+// }
+
 export function filterRoomData(checkInDate, checkOutDate) {
   return {
     type: "FILTER_ROOMDATA",
@@ -62,50 +126,9 @@ export function deleteSelectedRoomData(selectedRoomData, employeeDetails) {
   };
 }
 
-export function setAddOrUpdateFlag(
-  addRoomFlag,
-  roomFlag,
-  editFlag,
-  addOrUpdate
-) {
-  console.log("Action : ADD_OR_UPDATE", addOrUpdate);
-  return {
-    type: "ADD_OR_UPDATE",
-    payload: {
-      addRoomFlag: addRoomFlag,
-      roomFlag: roomFlag,
-      editFlag: editFlag,
-      addOrUpdate: addOrUpdate
-    }
-  };
-}
-
-export function showAddRoomsBookingPage(addRoomFlag, roomFlag) {
-  console.log("Action : ADD_ROOM_FLAG", roomFlag);
-  return {
-    type: "ADD_ROOM_FLAG",
-    payload: {
-      addRoomFlag: addRoomFlag,
-      roomFlag: roomFlag
-    }
-  };
-}
-
 export function resetRoomDataValue() {
   return {
     type: "RESET_ROOMDATA"
-  };
-}
-
-export function showViewEditBookingPage(addRoomFlag, roomFlag, editFlag) {
-  console.log("Action : EDIT_FLAG", editFlag);
-  return {
-    type: "EDIT_FLAG",
-    payload: {
-      addRoomFlag: addRoomFlag,
-      roomFlag: roomFlag,
-      editFlag: editFlag
-    }
   };
 }
 
@@ -135,17 +158,6 @@ export function bookedDetails(bookedDetails) {
     type: "BOOKED_DETAILS",
     payload: {
       bookedDetails
-    }
-  };
-}
-
-export function showSuccessPage(successFlag) {
-  console.log("Action : SUCCESS_FLAG", successFlag);
-
-  return {
-    type: "SUCCESS_FLAG",
-    payload: {
-      successFlag
     }
   };
 }

@@ -21,12 +21,7 @@ export default function showRoomsList(state = initialState, action) {
   console.log("---------------------------------------------------");
   switch (action.type) {
     case "BOOKED_DETAILS":
-      // console.log("After Booking :", action.payload);
       return action.payload;
-    // case "SUBMIT_ROOM":
-    //   console.log("BppkedRoomReducer ---->");
-    //   console.log(state.BookedRoomData.concat(action.payload));
-    //   return { BookedRoomData: state.BookedRoomData.concat(action.payload) };
     default:
       return state;
   }

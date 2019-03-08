@@ -3,10 +3,9 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import moment from "moment";
 import {
-  showAddRoomsBookingPage,
   submitNewBooking,
   updateExisitingBooking,
-  showSuccessPage,
+  setRoomsFlagAction,
   bookedDetails
 } from "../Actions";
 
@@ -37,18 +36,7 @@ class AddNewBooking extends React.Component {
     this.handle_roomType = this.handle_roomType.bind(this);
   }
   componentDidMount() {
-    console.log("CALLING componentDidMoount Funtion ");
     if (this.props.showRoomFlag.addOrUpdate === "UPDATE") {
-      console.log(
-        "CLICKED EDIT ICON from update page VALUE : " +
-          this.props.showRoomFlag.addOrUpdate
-      );
-      console.log("selectedEmployeeDetails ==");
-      console.log(this.props.selectedEmployeeDetails);
-      console.log(
-        "BEFORE parse into date " +
-          this.props.selectedEmployeeDetails.employeeDetails.CheckInDate
-      );
       let checkdatein = new Date(
         this.props.selectedEmployeeDetails.employeeDetails.CheckInDate
       );
@@ -68,21 +56,15 @@ class AddNewBooking extends React.Component {
         //   occupants: "1"
       });
     }
-    console.log(
-      " After check this.state.checkIn = " +
-        this.state.checkIn +
-        " TYPEOF  " +
-        typeof this.state.checkIn
-    );
   }
   goToHomePage() {
-    // console.log("CAll action to go to HomePage");
-    this.props.showAddRoomsBookingPage(false, true);
+    if (this.props.showRoomFlag.addOrUpdate === "UPDATE") {
+      this.props.setRoomsFlagAction(false, false, true);
+    } else {
+      this.props.setRoomsFlagAction(true, false);
+    }
   }
   handle_checkIn(e) {
-    // console.log("CHECK TYPE OF this input date : ");
-    // console.log(document.getElementsByName("checkIn"));
-    // console.log("TYPE OF == " + typeof document.getElementsByName("checkIn"));
     this.setState({
       checkIn: moment(e.target.value).format("YYYY-MM-DD")
     });
@@ -129,7 +111,6 @@ class AddNewBooking extends React.Component {
   }
   handleSubmit(e) {
     let updatedEmployeeObject;
-    console.log("ADDNEWCOMPNENT : this.state.checkIn : ", this.state.checkIn);
     if (this.state.empId !== "") {
       updatedEmployeeObject = {
         EmployeeName: this.state.empName,
@@ -143,34 +124,84 @@ class AddNewBooking extends React.Component {
         CheckInDate: this.state.checkIn,
         CheckOutDate: this.state.checkOut
       };
-      //console.log("PRINTING : bookedRoomsList ---------> ");
-      //console.log(this.props.bookedRoomsList);
     } else {
       alert("Please provide values");
     }
-    // console.log("PRINTING NEWLY ADDED ROOM OBJECT : ");
-    // console.log(updatedEmployeeObject);
-    if (this.props.showRoomFlag.addOrUpdate === "UPDATE") {
-      this.props.updateExisitingBooking(updatedEmployeeObject);
-    } else {
-      this.props.submitNewBooking(updatedEmployeeObject);
-    }
+    //check roomsList is coming here :
+    console.log(
+      "AddNewBooking : handleSubmit() : roomsList ",
+      this.props.roomsList
+    );
+    let copyOfRoomdata = [];
+    copyOfRoomdata = [
+      ...copyOfRoomdata,
+      ...JSON.parse(JSON.stringify(this.props.roomsList.RoomData))
+    ];
 
-    //bookedDetails call to have newly added employeed details to successpage
-    this.props.bookedDetails(updatedEmployeeObject);
-    this.props.showSuccessPage(true);
-    //call success Page
-    this.setState({
-      checkIn: "",
-      checkOut: "",
-      empId: "",
-      empName: "",
-      managerName: "",
-      projectId: "",
-      occupants: "",
-      roomNo: "",
-      roomType: ""
+    let localVar = copyOfRoomdata.map((room, i) => {
+      room.BookedEmployeeDetails = room.BookedEmployeeDetails.filter(
+        (employee, i) => {
+          if (
+            moment(employee.CheckInDate).format("MM-DD-YYYY") ==
+              moment(this.state.checkIn).format("MM-DD-YYYY") &&
+            moment(employee.CheckOutDate).format("MM-DD-YYYY") ==
+              moment(this.state.checkOut).format("MM-DD-YYYY")
+          ) {
+            return employee;
+          }
+        }
+      );
+      return room;
     });
+
+    console.log("localVar : Printing ", localVar);
+    let empArrLen,
+      capacity = 0;
+    localVar.map((room, i) => {
+      if (this.props.selectedRoomDetails.selectedRoom.RoomID === room.RoomID) {
+        empArrLen = room.BookedEmployeeDetails.length;
+        capacity = room.Capacity;
+      }
+      return room;
+    });
+    console.log(
+      "empArrLen : capacity : ",
+      empArrLen,
+      " Type : ",
+      typeof empArrLen,
+      " , ",
+      " capacity : ",
+      capacity,
+      " TypeOf : ",
+      typeof capacity
+    );
+
+    if (empArrLen === parseInt(capacity, 10)) {
+      alert(
+        "Selected ROOM Is FULL for Selected Dates, Change your dates or Room"
+      );
+    } else {
+      if (this.props.showRoomFlag.addOrUpdate === "UPDATE") {
+        this.props.updateExisitingBooking(updatedEmployeeObject);
+      } else {
+        this.props.submitNewBooking(updatedEmployeeObject);
+      }
+      //bookedDetails call to have newly added employeed details to successpage
+      this.props.bookedDetails(updatedEmployeeObject);
+      this.props.setRoomsFlagAction(false, false, false, true);
+      //call success Page
+      this.setState({
+        checkIn: "",
+        checkOut: "",
+        empId: "",
+        empName: "",
+        managerName: "",
+        projectId: "",
+        occupants: "",
+        roomNo: "",
+        roomType: ""
+      });
+    }
   }
   render() {
     //Check actionFlag value == ADD or UPDATE
@@ -288,7 +319,8 @@ class AddNewBooking extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    bookedRoomsList: state.bookedRoomsList,
+    // bookedRoomsList: state.bookedRoomsList,
+    roomsList: state.roomsList,
     selectedRoomDetails: state.selectedRoomDetails,
     showRoomFlag: state.showRoomFlag,
     selectedEmployeeDetails: state.selectedEmployeeDetails
@@ -298,10 +330,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      showAddRoomsBookingPage: showAddRoomsBookingPage,
       submitNewBooking: submitNewBooking,
       updateExisitingBooking: updateExisitingBooking,
-      showSuccessPage: showSuccessPage,
+      setRoomsFlagAction: setRoomsFlagAction,
       bookedDetails: bookedDetails
     },
     dispatch

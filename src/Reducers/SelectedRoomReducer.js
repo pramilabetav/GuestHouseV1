@@ -6,10 +6,6 @@ export default function showRoomsList(state = null, action) {
     case "SELECTED_ROOM":
       return action.payload;
     case "DELETE_SELECTED_ROOM_EMPLOYEE":
-      console.log(
-        "DELETE_SELECTED_ROOM_EMPLOYEE : action.payload.selectedRoomData.BookedEmployeeDetails : ",
-        action.payload.selectedRoomData.BookedEmployeeDetails
-      );
       action.payload.selectedRoomData.selectedRoom.BookedEmployeeDetails.map(
         (emp, i) => {
           action.payload.selectedRoomData.selectedRoom.BookedEmployeeDetails.splice(
@@ -18,10 +14,6 @@ export default function showRoomsList(state = null, action) {
           );
           // return emp;
         }
-      );
-      console.log(
-        "PRINTING updated value : ",
-        action.payload.selectedRoomData.BookedEmployeeDetails
       );
       return action.payload.selectedRoomData;
     default:

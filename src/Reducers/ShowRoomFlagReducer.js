@@ -16,16 +16,16 @@ export default function(state = initialState, action) {
   console.log("---------------------------------------------------");
   // console.log("collapse reducer : ", state);
   switch (action.type) {
-    case "SHOW_ROOMS":
+    case "SET_ROOMS_FLAG":
       return action.payload;
-    case "ADD_ROOM_FLAG":
-      return action.payload;
-    case "SUCCESS_FLAG":
-      return action.payload;
-    case "EDIT_FLAG":
-      return action.payload;
-    case "ADD_OR_UPDATE":
-      return action.payload;
+    // case "ADD_ROOM_FLAG":
+    //   return action.payload;
+    // case "SUCCESS_FLAG":
+    //   return action.payload;
+    // case "EDIT_FLAG":
+    //   return action.payload;
+    // case "ADD_OR_UPDATE":
+    //   return action.payload;
     default:
       return state;
   }

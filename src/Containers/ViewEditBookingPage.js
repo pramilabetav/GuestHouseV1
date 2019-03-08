@@ -3,10 +3,9 @@ import { bindActionCreators } from "redux";
 import moment from "moment";
 //import { editSelectedBooking, deleteSelectedBooking } from "../Actions";
 import {
-  showAddRoomsBookingPage,
   selectedEmployeeDetails,
   deleteEmployeeDetails,
-  setAddOrUpdateFlag,
+  setRoomsFlagAction,
   deleteSelectedRoomData,
   filterRoomData
 } from "../Actions";
@@ -22,28 +21,17 @@ class ViewEditBookingPage extends React.Component {
     this.callDelete = this.callDelete.bind(this);
   }
   goToHomePage() {
-    // console.log("CAll action to go to HomePage");
-    // this.props.showRoomsContainer(
-    //   this.state.checkInDateValue,
-    //   this.state.checkOutDateValue,
-    //   true
-    // );
-    console.log("Show Room flag : ", this.props.selectedDates);
-    console.log(
-      "CheckinDate : ViewEditBookingPage : ",
-      moment(this.props.selectedDates.checkInDate).format("YYYY-MM-DD")
-    );
     this.props.filterRoomData(
       moment(this.props.selectedDates.checkInDate).format("YYYY-MM-DD"),
       moment(this.props.selectedDates.checkOutDate).format("YYYY-MM-DD")
     );
-    this.props.showAddRoomsBookingPage(false, true);
+    this.props.setRoomsFlagAction(true, false, false, false, "");
   }
   callUpdate(employeeDetail) {
     //call method to set addflag true
     // this.props.showViewEditBookingPage(true, false, false);
     this.props.selectedEmployeeDetails(employeeDetail);
-    this.props.setAddOrUpdateFlag(true, false, false, "UPDATE");
+    this.props.setRoomsFlagAction(false, true, false, false, "UPDATE");
   }
   callDelete(employeeDetail) {
     // this.props.selectedEmployeeDetails(employeeDetail);
@@ -54,8 +42,6 @@ class ViewEditBookingPage extends React.Component {
     );
   }
   render() {
-    console.log("selectedRoomDetails --> ");
-    console.log(this.props.selectedRoomDetails);
     let empLen = this.props.selectedRoomDetails.selectedRoom
       .BookedEmployeeDetails.length;
     let bookedEmpData;
@@ -64,7 +50,7 @@ class ViewEditBookingPage extends React.Component {
       bookedEmpData = this.props.selectedRoomDetails.selectedRoom.BookedEmployeeDetails.map(
         (employeeDetail, i) => {
           return (
-            <div className="listView">
+            <div className="listView" key={i}>
               <div className="row">
                 <div className="col-sm-8">
                   <div className="bookingDetails">
@@ -168,10 +154,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      showAddRoomsBookingPage: showAddRoomsBookingPage,
       selectedEmployeeDetails: selectedEmployeeDetails,
       deleteEmployeeDetails: deleteEmployeeDetails,
-      setAddOrUpdateFlag: setAddOrUpdateFlag,
+      setRoomsFlagAction: setRoomsFlagAction,
       deleteSelectedRoomData: deleteSelectedRoomData,
       filterRoomData: filterRoomData
     },

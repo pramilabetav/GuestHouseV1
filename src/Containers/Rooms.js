@@ -4,10 +4,9 @@ import { bindActionCreators } from "redux";
 import moment from "moment";
 // import { selectedRoomDetails } from "../Actions";
 import {
-  showAddRoomsBookingPage,
+  setRoomsFlagAction,
   resetRoomDataValue,
-  selectedRoomDetails,
-  showViewEditBookingPage
+  selectedRoomDetails
 } from "../Actions";
 
 class Rooms extends React.Component {
@@ -15,56 +14,40 @@ class Rooms extends React.Component {
     super(props);
     this.state = {
       pummyData: [],
-      filterData: []
+      initialFilterState: []
     };
     this.goToHomePage = this.goToHomePage.bind(this);
     this.callAddNewBooking = this.callAddNewBooking.bind(this);
     this.callViewEditPage = this.callViewEditPage.bind(this);
   }
   callAddNewBooking(room) {
-    // console.log("Call showAddRoomsBookingPage method from Rooms component");
-    // console.log("RoomDetails", room);
-    this.props.showAddRoomsBookingPage(true, false);
+    this.props.setRoomsFlagAction(false, true);
     this.props.selectedRoomDetails(room);
   }
   callViewEditPage(room) {
-    this.props.showViewEditBookingPage(false, false, true);
+    this.props.setRoomsFlagAction(false, false, true, false, "UPDATE");
     this.props.selectedRoomDetails(room);
   }
   goToHomePage() {
-    // console.log("CAll action to go to HomePage");
-    this.props.showAddRoomsBookingPage(false, false);
+    this.props.setRoomsFlagAction(false, false);
     // this.props.resetRoomDataValue();
   }
   componentDidMount() {
     let filterData = [];
-    // console.log(
-    //   "CALLING this.props.roomsList.RoomData  ##########",
-    //   this.props.roomsList.RoomData,
-    //   "   BEFORE assigning filterDAta : ",
-    //   filterData
-    // );
     filterData = [
-      ...this.state.filterData,
+      ...this.state.initialFilterState,
       ...JSON.parse(JSON.stringify(this.props.roomsList.RoomData))
     ];
-    console.log(
-      "CALLING componenetDidMount this.props.roomsList.RoomData : ",
-      this.props.roomsList.RoomData,
-      " and filterDAta : ",
-      filterData
-    );
     let localVar = filterData.map((room, i) => {
       room.BookedEmployeeDetails = room.BookedEmployeeDetails.filter(
-        employee => {
-          console.log("employee.CheckInDate : ", employee.CheckInDate);
-          console.log(
-            "this.props.showRoomFlag.checkInDate : ",
-            moment(this.props.selectedDates.checkInDate).format("MM-DD-YYYY")
-          );
+        (employee, i) => {
           if (
             moment(employee.CheckInDate).format("MM-DD-YYYY") ==
-            moment(this.props.selectedDates.checkInDate).format("MM-DD-YYYY")
+              moment(this.props.selectedDates.checkInDate).format(
+                "MM-DD-YYYY"
+              ) &&
+            moment(employee.CheckOutDate).format("MM-DD-YYYY") ==
+              moment(this.props.selectedDates.checkOutDate).format("MM-DD-YYYY")
           ) {
             return employee;
           }
@@ -79,64 +62,30 @@ class Rooms extends React.Component {
       ]
     });
     localVar = [];
-    console.log(
-      "ComponentDidMount --> After Filter : filterData = ",
-      filterData,
-      " localVar : ",
-      localVar
-    );
-    console.log("ComponentDidMount --> After Filter : localVar = ", localVar);
-    console.log(
-      "ComponentDidMount --> After Filter : this.state.pummyData = ",
-      this.state.pummyData
-    );
   }
   render() {
-    console.log("ROOM_COMPONENT: printing showRoomFlag value === ");
-    console.log(this.props.showRoomFlag);
-    console.log(
-      "ROOM_COMPONENT: RENDER method pummyData value === ",
-      this.state.pummyData
-    );
-    console.log("*********************************************");
     let selectClass;
-    // let counter = 0;
-    // let returnMatchedRoom;
-    // this.state.pummyData[0].map((pummy, i) => {
-    //   console.log("CHECKING +++++ ", pummy);
-    // });
-
+    let titleData;
     var returnRoomDisplayData = this.state.pummyData.map((room, i) => {
-      // room.BookedEmployeeDetails.map((employee, i) => {
-      //   if (employee.CheckInDate) {
-      //     returnMatchedRoom = room.BookedEmployeeDetails.filter(
-      //       emp =>
-      //         emp.CheckInDate ===
-      //         moment(this.props.showRoomFlag.checkInDate).format("MM-DD-YYYY")
-      //     );
-      //   }
-      //   console.log(
-      //     "returnMatchedRoom^^^^^^^^^^^^^^^^^^^^^^^^^",
-      //     returnMatchedRoom
-      //   );
-      // });
-
       if (room.BookedEmployeeDetails.length === parseInt(room.Capacity, 10)) {
         selectClass = "roomDetails room-booked";
+        titleData = "Booking is Full";
       } else if (
         room.BookedEmployeeDetails.length < parseInt(room.Capacity, 10) &&
         room.BookedEmployeeDetails.length > "0"
       ) {
         selectClass = "roomDetails room-partialbooked";
+        titleData = "Add A New Room";
       } else {
         selectClass = "roomDetails room-vacant";
+        titleData = "Add A New Room";
       }
       return (
         <div className="room" key={i}>
           <div
             className={selectClass}
             onClick={() => this.callAddNewBooking(room)}
-            title="Add A New Room"
+            title={titleData}
           >
             <label className="roomLabel">Room Number</label>
             <label className="roomNumber">{room.RoomID}</label>
@@ -220,10 +169,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      showAddRoomsBookingPage: showAddRoomsBookingPage,
+      setRoomsFlagAction: setRoomsFlagAction,
       resetRoomDataValue: resetRoomDataValue,
-      selectedRoomDetails: selectedRoomDetails,
-      showViewEditBookingPage: showViewEditBookingPage
+      selectedRoomDetails: selectedRoomDetails
     },
     dispatch
   );
