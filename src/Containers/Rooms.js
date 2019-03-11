@@ -13,7 +13,7 @@ class Rooms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pummyData: [],
+      roomDataCopy: [],
       initialFilterState: []
     };
     this.goToHomePage = this.goToHomePage.bind(this);
@@ -56,8 +56,8 @@ class Rooms extends React.Component {
       return room;
     });
     this.setState({
-      pummyData: [
-        ...this.state.pummyData,
+      roomDataCopy: [
+        ...this.state.roomDataCopy,
         ...JSON.parse(JSON.stringify(localVar))
       ]
     });
@@ -66,7 +66,7 @@ class Rooms extends React.Component {
   render() {
     let selectClass;
     let titleData;
-    var returnRoomDisplayData = this.state.pummyData.map((room, i) => {
+    var returnRoomDisplayData = this.state.roomDataCopy.map((room, i) => {
       if (room.BookedEmployeeDetails.length === parseInt(room.Capacity, 10)) {
         selectClass = "roomDetails room-booked";
         titleData = "Booking is Full";

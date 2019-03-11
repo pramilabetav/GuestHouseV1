@@ -142,10 +142,10 @@ class AddNewBooking extends React.Component {
       room.BookedEmployeeDetails = room.BookedEmployeeDetails.filter(
         (employee, i) => {
           if (
-            moment(employee.CheckInDate).format("MM-DD-YYYY") ==
-              moment(this.state.checkIn).format("MM-DD-YYYY") &&
-            moment(employee.CheckOutDate).format("MM-DD-YYYY") ==
-              moment(this.state.checkOut).format("MM-DD-YYYY")
+            moment(this.state.checkIn).format("MM-DD-YYYY") ===
+              moment(employee.CheckInDate).format("MM-DD-YYYY") &&
+            moment(this.state.checkOut).format("MM-DD-YYYY") ===
+              moment(employee.CheckOutDate).format("MM-DD-YYYY")
           ) {
             return employee;
           }
@@ -154,7 +154,7 @@ class AddNewBooking extends React.Component {
       return room;
     });
 
-    console.log("localVar : Printing ", localVar);
+    console.log("AddNewBooking : localVar : Printing ", localVar);
     let empArrLen,
       capacity = 0;
     localVar.map((room, i) => {
@@ -175,32 +175,52 @@ class AddNewBooking extends React.Component {
       " TypeOf : ",
       typeof capacity
     );
-
-    if (empArrLen === parseInt(capacity, 10)) {
-      alert(
-        "Selected ROOM Is FULL for Selected Dates, Change your dates or Room"
-      );
-    } else {
-      if (this.props.showRoomFlag.addOrUpdate === "UPDATE") {
+    if (this.props.showRoomFlag.addOrUpdate === "UPDATE") {
+      if (empArrLen === parseInt(capacity, 10)) {
+        alert(
+          "Selected ROOM Is FULL for Selected Dates, Change your dates or Room"
+        );
+      } else {
         this.props.updateExisitingBooking(updatedEmployeeObject);
+        //bookedDetails call to have newly added employeed details to successpage
+        this.props.bookedDetails(updatedEmployeeObject);
+        this.props.setRoomsFlagAction(false, false, false, true);
+        //call success Page
+        this.setState({
+          checkIn: "",
+          checkOut: "",
+          empId: "",
+          empName: "",
+          managerName: "",
+          projectId: "",
+          occupants: "",
+          roomNo: "",
+          roomType: ""
+        });
+      }
+    } else {
+      if (empArrLen === parseInt(capacity, 10)) {
+        alert(
+          "Selected ROOM Is FULL for Selected Dates, Change your dates or Room"
+        );
       } else {
         this.props.submitNewBooking(updatedEmployeeObject);
+        //bookedDetails call to have newly added employeed details to successpage
+        this.props.bookedDetails(updatedEmployeeObject);
+        this.props.setRoomsFlagAction(false, false, false, true);
+        //call success Page
+        this.setState({
+          checkIn: "",
+          checkOut: "",
+          empId: "",
+          empName: "",
+          managerName: "",
+          projectId: "",
+          occupants: "",
+          roomNo: "",
+          roomType: ""
+        });
       }
-      //bookedDetails call to have newly added employeed details to successpage
-      this.props.bookedDetails(updatedEmployeeObject);
-      this.props.setRoomsFlagAction(false, false, false, true);
-      //call success Page
-      this.setState({
-        checkIn: "",
-        checkOut: "",
-        empId: "",
-        empName: "",
-        managerName: "",
-        projectId: "",
-        occupants: "",
-        roomNo: "",
-        roomType: ""
-      });
     }
   }
   render() {
@@ -263,13 +283,17 @@ class AddNewBooking extends React.Component {
           </div>
           <div className="form-group">
             <label>EmployeeID :</label>{" "}
-            <input
-              type="text"
-              name="empId"
-              value={this.state.empId}
-              onChange={e => this.handle_empId(e)}
-              className="form-control"
-            />
+            {this.props.showRoomFlag.addOrUpdate === "UPDATE" ? (
+              <label>{this.state.empId}</label>
+            ) : (
+              <input
+                type="text"
+                name="empId"
+                value={this.state.empId}
+                onChange={e => this.handle_empId(e)}
+                className="form-control"
+              />
+            )}
           </div>
           <div className="form-group">
             <label>Employee Name :</label>{" "}
