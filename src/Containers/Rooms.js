@@ -41,20 +41,115 @@ class Rooms extends React.Component {
     let localVar = filterData.map((room, i) => {
       room.BookedEmployeeDetails = room.BookedEmployeeDetails.filter(
         (employee, i) => {
+          // if (
+          //   moment(employee.CheckInDate).format("MM-DD-YYYY") ==
+          //     moment(this.props.selectedDates.checkInDate).format(
+          //       "MM-DD-YYYY"
+          //     ) &&
+          //   moment(employee.CheckOutDate).format("MM-DD-YYYY") ==
+          //     moment(this.props.selectedDates.checkOutDate).format("MM-DD-YYYY")
+          // ) {
+          //   return employee;
+          // }
           if (
-            moment(employee.CheckInDate).format("MM-DD-YYYY") ==
-              moment(this.props.selectedDates.checkInDate).format(
+            moment(this.props.selectedDates.checkInDate).format(
+              "MM-DD-YYYY"
+            ) === moment(employee.CheckInDate).format("MM-DD-YYYY") &&
+            (moment(this.props.selectedDates.checkOutDate).format(
+              "MM-DD-YYYY"
+            ) >= moment(employee.CheckOutDate).format("MM-DD-YYYY") ||
+              moment(this.props.selectedDates.checkOutDate).format(
                 "MM-DD-YYYY"
-              ) &&
-            moment(employee.CheckOutDate).format("MM-DD-YYYY") ==
-              moment(this.props.selectedDates.checkOutDate).format("MM-DD-YYYY")
+              ) < moment(employee.CheckOutDate).format("MM-DD-YYYY"))
           ) {
+            console.log("Overlap condition ");
             return employee;
           }
+          //2.1
+          else if (
+            ((moment(this.props.selectedDates.checkInDate).format(
+              "MM-DD-YYYY"
+            ) > moment(employee.CheckInDate).format("MM-DD-YYYY") &&
+              moment(this.props.selectedDates.checkInDate).format(
+                "MM-DD-YYYY"
+              ) < moment(employee.CheckOutDate).format("MM-DD-YYYY")) ||
+              moment(this.props.selectedDates.checkInDate).format(
+                "MM-DD-YYYY"
+              ) < moment(employee.CheckInDate).format("MM-DD-YYYY")) &&
+            (moment(this.props.selectedDates.checkOutDate).format(
+              "MM-DD-YYYY"
+            ) > moment(employee.CheckInDate).format("MM-DD-YYYY") &&
+              moment(this.props.selectedDates.checkOutDate).format(
+                "MM-DD-YYYY"
+              ) < moment(employee.CheckOutDate).format("MM-DD-YYYY"))
+          ) {
+            console.log("ROOMID --------> ", room.RoomID);
+            console.log("2.1 : CI Open End OR SubSet ");
+            return employee;
+          }
+          //2.2
+          else if (
+            moment(this.props.selectedDates.checkInDate).format("MM-DD-YYYY") >
+              moment(employee.CheckInDate).format("MM-DD-YYYY") &&
+            moment(this.props.selectedDates.checkInDate).format("MM-DD-YYYY") <
+              moment(employee.CheckOutDate).format("MM-DD-YYYY") &&
+            (moment(this.props.selectedDates.checkOutDate).format(
+              "MM-DD-YYYY"
+            ) >= moment(employee.CheckOutDate).format("MM-DD-YYYY") ||
+              moment(this.props.selectedDates.checkOutDate).format(
+                "MM-DD-YYYY"
+              ) < moment(employee.CheckOutDate).format("MM-DD-YYYY"))
+          ) {
+            console.log("ROOMID --------> ", room.RoomID);
+            console.log("2.2 : CO Open End OR SubSet ");
+            return employee;
+          }
+          //2.2
+          // else if (
+          //   moment(this.props.selectedDates.checkInDate).format("MM-DD-YYYY") >
+          //     moment(employee.CheckInDate).format("MM-DD-YYYY") &&
+          //   moment(this.props.selectedDates.checkInDate).format("MM-DD-YYYY") <
+          //     moment(employee.CheckOutDate).format("MM-DD-YYYY") &&
+          //   (moment(this.props.selectedDates.checkOutDate).format(
+          //     "MM-DD-YYYY"
+          //   ) > moment(employee.CheckOutDate).format("MM-DD-YYYY") ||
+          //     moment(this.props.selectedDates.checkOutDate).format(
+          //       "MM-DD-YYYY"
+          //     ) < moment(employee.CheckOutDate).format("MM-DD-YYYY"))
+          // ) {
+          //   console.log("2.2 : CO Open End Or SubSet ");
+          //   return employee;
+          // }
+          //3
+          // else if (
+          //   moment(this.props.selectedDates.checkInDate).format("MM-DD-YYYY") >
+          //   moment(employee.CheckInDate).format("MM-DD-YYYY")
+          // ) {
+          //   console.log("Overlap condition ");
+          //   return employee;
+          // }
+          //4
+          // else if (
+          //   moment(this.props.selectedDates.checkInDate).format("MM-DD-YYYY") >
+          //   moment(employee.CheckInDate).format("MM-DD-YYYY")
+          // ) {
+          //   console.log("Overlap condition ");
+          //   return employee;
+          // }
+          //5
+          // else if (
+          //   moment(this.props.selectedDates.checkInDate).format("MM-DD-YYYY") >
+          //   moment(employee.CheckInDate).format("MM-DD-YYYY")
+          // ) {
+          //   console.log("Overlap condition ");
+          //   return employee;
+          // }
         }
       );
       return room;
     });
+
+    console.log("HELLO : localVar : ", localVar);
     this.setState({
       roomDataCopy: [
         ...this.state.roomDataCopy,
@@ -67,7 +162,7 @@ class Rooms extends React.Component {
     let selectClass;
     let titleData;
     var returnRoomDisplayData = this.state.roomDataCopy.map((room, i) => {
-      if (room.BookedEmployeeDetails.length === parseInt(room.Capacity, 10)) {
+      if (room.BookedEmployeeDetails.length >= parseInt(room.Capacity, 10)) {
         selectClass = "roomDetails room-booked";
         titleData = "Booking is Full";
       } else if (
