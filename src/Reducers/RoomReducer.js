@@ -45,7 +45,7 @@ const initialState = {
           EmployeeID: "1023",
           ProjectID: "P103",
           ManagerName: "Swapnil103",
-          CheckInDate: "03-03-2019",
+          CheckInDate: "03-05-2019",
           CheckOutDate: "03-06-2019"
         },
         {
@@ -53,7 +53,7 @@ const initialState = {
           EmployeeID: "1024",
           ProjectID: "P1024",
           ManagerName: "Swapnil1024",
-          CheckInDate: "03-03-2019",
+          CheckInDate: "03-05-2019",
           CheckOutDate: "03-06-2019"
         }
       ]
@@ -95,15 +95,15 @@ const initialState = {
           ProjectID: "P101",
           ManagerName: "Pummy106",
           CheckInDate: "03-03-2019",
-          CheckOutDate: "05-03-2019"
+          CheckOutDate: "03-05-2019"
         },
         {
           EmployeeName: "Employee106",
           EmployeeID: "1062",
           ProjectID: "P101",
           ManagerName: "Manager106",
-          CheckInDate: "02-03-2019",
-          CheckOutDate: "05-03-2019"
+          CheckInDate: "03-02-2019",
+          CheckOutDate: "03-05-2019"
         }
       ]
     },

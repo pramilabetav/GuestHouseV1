@@ -104,6 +104,18 @@ class Rooms extends React.Component {
             console.log("2.2 : CO Open End OR SubSet ");
             return employee;
           }
+          //3
+          else if (
+            moment(this.props.selectedDates.checkInDate).format("MM-DD-YYYY") <
+              moment(employee.CheckInDate).format("MM-DD-YYYY") &&
+            moment(this.props.selectedDates.checkOutDate).format("MM-DD-YYYY") >
+              moment(employee.CheckOutDate).format("MM-DD-YYYY")
+          ) {
+            console.log("ROOMID --------> ", room.RoomID);
+            console.log("3 : CI and CO Open End OR SuperSet ");
+            return employee;
+          }
+
           //2.2
           // else if (
           //   moment(this.props.selectedDates.checkInDate).format("MM-DD-YYYY") >
