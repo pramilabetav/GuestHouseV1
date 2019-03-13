@@ -9,6 +9,7 @@ import App from "./Containers/App.js";
 // import "./styles.css";
 import "./Styles/main.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/js/bootstrap.min.js";
 
 const store = createStore(reducers);
 

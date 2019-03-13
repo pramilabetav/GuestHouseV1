@@ -24,10 +24,7 @@ class HomePage extends React.Component {
             <Rooms />
           </div>
         ) : (
-          <div>
-            <DateContainer />
-            <Rooms />
-          </div>
+          <DateContainer />
         )}
       </div>
     );

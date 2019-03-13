@@ -10,7 +10,7 @@ class SuccessPage extends React.Component {
     this.handle_click = this.handle_click.bind(this);
   }
   handle_click() {
-    this.props.setRoomsFlagAction(false, false, false, false, "");
+    this.props.setRoomsFlagAction(true, false, false, false, "");
   }
   render() {
     return (

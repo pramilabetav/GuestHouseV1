@@ -134,7 +134,7 @@ class DateContainer extends React.Component {
     return (
       <div className="date_search">
         <div className="panel">
-          <h3 className="pageTitle">
+          <h3 className="subTitle">
             Please enter check in and check out dates
           </h3>
         </div>
@@ -176,7 +176,7 @@ class DateContainer extends React.Component {
         </div>
         <hr />
         <div>
-          <label className="pageTitle">{dates}</label>
+          <label className="info">{dates}</label>
         </div>
       </div>
     );

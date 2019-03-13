@@ -229,113 +229,127 @@ class AddNewBooking extends React.Component {
     //Add blank values should be set to field values
 
     return (
-      <div className="row ">
-        <div className="col-sm-3" />
-        <div className="col-sm-6 addRoom">
-          <div className="form-group">
-            <label>
-              <a href="#" onClick={this.goToHomePage}>
-                Back{" "}
-              </a>
-            </label>
+      <div>
+        <div className="row">
+          <div className="col-sm-3" />
+          <div className="col-sm-6">
+            <div class="alert alert-danger">
+              <strong>Danger!</strong> Selected ROOM Is FULL for Selected Dates,
+              Change your dates or Room.
+            </div>
           </div>
-          <div className="form-group">
-            <label>Room No :</label>{" "}
-            <label>{this.props.selectedRoomDetails.selectedRoom.RoomID}</label>
-          </div>
-          <div className="form-group">
-            <label>Room Type :</label>{" "}
-            <label>
-              {this.props.selectedRoomDetails.selectedRoom.RoomType}
-            </label>
-          </div>
-          <div className="form-group">
-            <label>No. Of Occupants :</label>
-            <select
-              value={this.state.occupants}
-              onChange={e => this.handle_occupants(e)}
-              className="form-control"
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-            </select>
-          </div>
+          <div className="col-sm-3" />
+        </div>
+        <div className="row ">
+          <div className="col-sm-3" />
+          <div className="col-sm-6 addRoom">
+            <div className="form-group">
+              <label>
+                <a href="#" onClick={this.goToHomePage}>
+                  Back{" "}
+                </a>
+              </label>
+            </div>
+            <div className="form-group">
+              <label>Room No :</label>{" "}
+              <label>
+                {this.props.selectedRoomDetails.selectedRoom.RoomID}
+              </label>
+            </div>
+            <div className="form-group">
+              <label>Room Type :</label>{" "}
+              <label>
+                {this.props.selectedRoomDetails.selectedRoom.RoomType}
+              </label>
+            </div>
+            <div className="form-group">
+              <label>No. Of Occupants :</label>
+              <select
+                value={this.state.occupants}
+                onChange={e => this.handle_occupants(e)}
+                className="form-control"
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+              </select>
+            </div>
 
-          <div className="form-group">
-            <label>CheckIn date :</label>{" "}
-            <input
-              type="date"
-              name="checkIn"
-              value={this.state.checkIn}
-              onChange={e => this.handle_checkIn(e)}
-              className="form-control"
-            />
-          </div>
-          <div className="form-group">
-            <label>CheckOut date :</label>{" "}
-            <input
-              type="date"
-              name="checkOut"
-              value={this.state.checkOut}
-              onChange={e => this.handle_checkOut(e)}
-              className="form-control"
-            />
-          </div>
-          <div className="form-group">
-            <label>EmployeeID :</label>{" "}
-            {this.props.showRoomFlag.addOrUpdate === "UPDATE" ? (
-              <label>{this.state.empId}</label>
-            ) : (
+            <div className="form-group">
+              <label>CheckIn date :</label>{" "}
               <input
-                type="text"
-                name="empId"
-                value={this.state.empId}
-                onChange={e => this.handle_empId(e)}
+                type="date"
+                name="checkIn"
+                value={this.state.checkIn}
+                onChange={e => this.handle_checkIn(e)}
                 className="form-control"
               />
-            )}
+            </div>
+            <div className="form-group">
+              <label>CheckOut date :</label>{" "}
+              <input
+                type="date"
+                name="checkOut"
+                value={this.state.checkOut}
+                onChange={e => this.handle_checkOut(e)}
+                className="form-control"
+              />
+            </div>
+            <div className="form-group">
+              <label>EmployeeID :</label>{" "}
+              {this.props.showRoomFlag.addOrUpdate === "UPDATE" ? (
+                <label>{this.state.empId}</label>
+              ) : (
+                <input
+                  type="text"
+                  name="empId"
+                  value={this.state.empId}
+                  onChange={e => this.handle_empId(e)}
+                  className="form-control"
+                />
+              )}
+            </div>
+            <div className="form-group">
+              <label>Employee Name :</label>{" "}
+              <input
+                type="text"
+                name="empName"
+                value={this.state.empName}
+                onChange={e => this.handle_empName(e)}
+                className="form-control"
+              />
+            </div>
+            <div className="form-group">
+              <label>Manager Name :</label>{" "}
+              <input
+                type="text"
+                name="managerName"
+                value={this.state.managerName}
+                onChange={e => this.handle_managerName(e)}
+                className="form-control"
+              />
+            </div>
+            <div className="form-group">
+              <label>ProjectID :</label>{" "}
+              <input
+                type="text"
+                name="projectId"
+                value={this.state.projectId}
+                onChange={e => this.handle_projectId(e)}
+                className="form-control"
+              />
+            </div>
+            <div>
+              <button
+                className="btn btn-md btn-primary"
+                type="submit"
+                onClick={e => this.handleSubmit(e)}
+              >
+                Submit
+              </button>
+            </div>
           </div>
-          <div className="form-group">
-            <label>Employee Name :</label>{" "}
-            <input
-              type="text"
-              name="empName"
-              value={this.state.empName}
-              onChange={e => this.handle_empName(e)}
-              className="form-control"
-            />
-          </div>
-          <div className="form-group">
-            <label>Manager Name :</label>{" "}
-            <input
-              type="text"
-              name="managerName"
-              value={this.state.managerName}
-              onChange={e => this.handle_managerName(e)}
-              className="form-control"
-            />
-          </div>
-          <div className="form-group">
-            <label>ProjectID :</label>{" "}
-            <input
-              type="text"
-              name="projectId"
-              value={this.state.projectId}
-              onChange={e => this.handle_projectId(e)}
-              className="form-control"
-            />
-          </div>
-          <div>
-            <button
-              className="btn btn-md btn-primary"
-              type="submit"
-              onClick={e => this.handleSubmit(e)}
-            >
-              Submit
-            </button>
-          </div>
+          <div className="col-sm-3" />
         </div>
-        <div className="col-sm-3" />
       </div>
     );
   }

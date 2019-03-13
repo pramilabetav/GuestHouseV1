@@ -137,6 +137,7 @@ class ViewEditBookingPage extends React.Component {
             </label>
           </div>
         </div>
+        <hr />
         {bookedEmpData}
         <hr />
       </div>
