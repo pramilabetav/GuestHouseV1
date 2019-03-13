@@ -16,9 +16,9 @@ const initialState = {
 };
 
 export default function showRoomsList(state = initialState, action) {
-  console.log("ROOM_REDUCER : action.type : ", action.type);
-  console.log("ROOM_REDUCER : action.payload : ", action.payload);
-  console.log("---------------------------------------------------");
+  // console.log("ROOM_REDUCER : action.type : ", action.type);
+  // console.log("ROOM_REDUCER : action.payload : ", action.payload);
+  // console.log("---------------------------------------------------");
   switch (action.type) {
     case "BOOKED_DETAILS":
       return action.payload;

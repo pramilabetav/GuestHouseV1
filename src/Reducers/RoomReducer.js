@@ -1,3 +1,4 @@
+import moment from "moment";
 const initialState = {
   RoomData: [
     {
@@ -240,14 +241,29 @@ export default function showRoomsList(state = initialState, action) {
       });
       console.log("AFTER UPDATE Roomdata : ", state.RoomData);
       return { RoomData: state.RoomData };
-    case "FILTER_ROOMDATA":
-      let filterData = [];
-      filterData = [
-        ...filterData,
-        ...JSON.parse(JSON.stringify(state.RoomData))
-      ];
-      return { RoomData: filterData };
+    // case "FILTER_ROOMDATA":
+    //   let filterData = [];
+    //   console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    //   console.log(
+    //     "RoomReducer : FILTER_ROOMDATA case : action.payload.roomDataCopy ==== ",
+    //     action.payload.roomDataCopy
+    //   );
+    //   console.log(
+    //     "RoomReducer : FILTER_ROOMDATA case : state.Roomdata ==== ",
+    //     state.RoomData
+    //   );
+    //   console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    //   filterData = [
+    //     ...filterData,
+    //     ...JSON.parse(JSON.stringify(action.payload.roomDataCopy))
+    //   ];
+
+    //   return { RoomData: filterData };
     default:
-      return state;
+      console.log(
+        "RoomReducer : Default Case Called THE END RoomData, ",
+        state.RoomData
+      );
+      return { RoomData: state.RoomData };
   }
 }

@@ -4,11 +4,12 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setRoomsFlagAction, filterRoomData, selectedDate } from "../Actions";
-let dates;
+let dates, localVar;
 class DateContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      roomDataCopy: [],
       checkInDateValue: "",
       checkOutDateValue: "",
       checkInDateFlag: false,
@@ -17,6 +18,7 @@ class DateContainer extends React.Component {
     this.validCheckInDate = this.validCheckInDate.bind(this);
     this.validCheckOutDate = this.validCheckOutDate.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.searchAvailability = this.searchAvailability.bind(this);
   }
 
   validCheckInDate(e) {
@@ -31,24 +33,88 @@ class DateContainer extends React.Component {
       checkOutDateFlag: true
     });
   }
-  handleSearch(e) {
-    if (this.state.checkInDateFlag && this.state.checkOutDateFlag) {
-      //Set the dates
-      this.props.selectedDate(
-        this.state.checkInDateValue,
-        this.state.checkOutDateValue
+  searchAvailability() {
+    let filterData = [];
+    let checkInDateCompare;
+    let checkOutDateCompare;
+    if (this.state.checkInDateValue && this.state.checkOutDateValue) {
+      checkInDateCompare = this.state.checkInDateValue;
+      checkOutDateCompare = this.state.checkOutDateValue;
+    } else {
+      if (this.props.selectedDateReducer) {
+        checkInDateCompare = this.props.selectedDateReducer.checkInDate;
+        checkOutDateCompare = this.props.selectedDateReducer.checkOutDate;
+      }
+    }
+    filterData = [
+      ...filterData,
+      ...JSON.parse(JSON.stringify(this.props.roomsList.RoomData))
+    ];
+    localVar = filterData.map((room, i) => {
+      room.BookedEmployeeDetails = room.BookedEmployeeDetails.filter(
+        (employee, i) => {
+          let CI = moment(checkInDateCompare).format("MM-DD-YYYY");
+          let CO = moment(checkOutDateCompare).format("MM-DD-YYYY");
+          let ECI = moment(employee.CheckInDate).format("MM-DD-YYYY");
+          let ECO = moment(employee.CheckOutDate).format("MM-DD-YYYY");
+          //1
+          if (CI === ECI && (CO >= ECO || CO < ECO)) {
+            console.log("ROOMID --------> ", room.RoomID);
+            console.log("1 : Overlap condition ");
+            return employee;
+          }
+          //2.1
+          else if (
+            ((CI > ECI && CI < ECO) || CI < ECI) &&
+            (CO > ECI && CO < ECO)
+          ) {
+            console.log("ROOMID --------> ", room.RoomID);
+            console.log("2.1 : CI Open End OR SubSet ");
+            return employee;
+          }
+          //2.2
+          else if (CI > ECI && CI < ECO && (CO >= ECO || CO < ECO)) {
+            console.log("ROOMID --------> ", room.RoomID);
+            console.log("2.2 : CO Open End OR SubSet ");
+            return employee;
+          }
+          //3
+          else if (CI < ECI && CO > ECO) {
+            console.log("ROOMID --------> ", room.RoomID);
+            console.log("3 : CI and CO Open End OR SuperSet ");
+            return employee;
+          }
+        }
       );
-      //Call the Action
-      this.props.setRoomsFlagAction(true);
-      dates =
-        "Your search from " +
-        this.state.checkInDateValue +
-        " to " +
-        this.state.checkOutDateValue;
+      return room;
+    });
+    this.props.filterRoomData(localVar);
+    localVar = [];
+  }
+  handleSearch() {
+    if (this.state.checkInDateFlag && this.state.checkOutDateFlag) {
+      if (this.state.checkOutDateValue > this.state.checkInDateValue) {
+        this.searchAvailability();
+        //   //Set the dates
+        this.props.selectedDate(
+          this.state.checkInDateValue,
+          this.state.checkOutDateValue
+        );
+        //   //Call the Action
+        this.props.setRoomsFlagAction(true);
+        dates =
+          "Your search from " +
+          this.state.checkInDateValue +
+          " to " +
+          this.state.checkOutDateValue;
+      } else {
+        alert("Checkout Date Should Be Greater Than CheckIn Date");
+      }
     } else {
       dates = "Please selecte check in and check out dates";
     }
   }
+
   componentDidMount() {
     if (this.props.selectedDateReducer) {
       this.setState({
@@ -61,6 +127,7 @@ class DateContainer extends React.Component {
         checkInDateFlag: true,
         checkOutDateFlag: true
       });
+      this.searchAvailability();
     }
   }
   render() {
@@ -101,7 +168,7 @@ class DateContainer extends React.Component {
             <button
               className="btn btn-md btn-primary"
               type="submit"
-              onClick={e => this.handleSearch(e)}
+              onClick={this.handleSearch}
             >
               Search
             </button>
@@ -117,6 +184,7 @@ class DateContainer extends React.Component {
 }
 function mapStateToProps(state) {
   return {
+    roomsList: state.roomsList,
     selectedDateReducer: state.dateReducer
   };
 }

@@ -7,7 +7,7 @@ import {
   deleteEmployeeDetails,
   setRoomsFlagAction,
   deleteSelectedRoomData,
-  filterRoomData
+  selectedDate
 } from "../Actions";
 import { connect } from "react-redux";
 
@@ -21,7 +21,7 @@ class ViewEditBookingPage extends React.Component {
     this.callDelete = this.callDelete.bind(this);
   }
   goToHomePage() {
-    this.props.filterRoomData(
+    this.props.selectedDate(
       moment(this.props.selectedDates.checkInDate).format("YYYY-MM-DD"),
       moment(this.props.selectedDates.checkOutDate).format("YYYY-MM-DD")
     );
@@ -158,7 +158,7 @@ function mapDispatchToProps(dispatch) {
       deleteEmployeeDetails: deleteEmployeeDetails,
       setRoomsFlagAction: setRoomsFlagAction,
       deleteSelectedRoomData: deleteSelectedRoomData,
-      filterRoomData: filterRoomData
+      selectedDate: selectedDate
     },
     dispatch
   );

@@ -11,9 +11,9 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-  console.log("SHOW_ROOM_REDUCER : action.type : ", action.type);
-  console.log("SHOW_ROOM_REDUCER : action.payload : ", action.payload);
-  console.log("---------------------------------------------------");
+  // console.log("SHOW_ROOM_REDUCER : action.type : ", action.type);
+  // console.log("SHOW_ROOM_REDUCER : action.payload : ", action.payload);
+  // console.log("---------------------------------------------------");
   // console.log("collapse reducer : ", state);
   switch (action.type) {
     case "SET_ROOMS_FLAG":

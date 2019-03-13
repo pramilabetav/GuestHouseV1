@@ -73,12 +73,12 @@ export function setRoomsFlagAction(
 //   };
 // }
 
-export function filterRoomData(checkInDate, checkOutDate) {
+export function filterRoomData(filterData) {
+  console.log("Actions : filterRoomData : Prinitning copyRoomData : ");
   return {
     type: "FILTER_ROOMDATA",
     payload: {
-      checkInDate,
-      checkOutDate
+      filterData
     }
   };
 }

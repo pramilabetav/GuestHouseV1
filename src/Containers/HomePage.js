@@ -19,9 +19,15 @@ class HomePage extends React.Component {
         ) : this.props.showRoomFlag.addRoomFlag ? (
           <AddNewBooking />
         ) : this.props.showRoomFlag.roomFlag ? (
-          <Rooms />
+          <div>
+            <DateContainer />
+            <Rooms />
+          </div>
         ) : (
-          <DateContainer />
+          <div>
+            <DateContainer />
+            <Rooms />
+          </div>
         )}
       </div>
     );
