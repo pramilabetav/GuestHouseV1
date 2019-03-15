@@ -4,6 +4,7 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setRoomsFlagAction, filterRoomData, selectedDate } from "../Actions";
+import ModernDatepicker from "react-modern-datepicker";
 let dates, localVar;
 class DateContainer extends React.Component {
   constructor(props) {
@@ -21,15 +22,15 @@ class DateContainer extends React.Component {
     this.searchAvailability = this.searchAvailability.bind(this);
   }
 
-  validCheckInDate(e) {
+  validCheckInDate(date) {
     this.setState({
-      checkInDateValue: e.target.value,
+      checkInDateValue: date,
       checkInDateFlag: true
     });
   }
-  validCheckOutDate(e) {
+  validCheckOutDate(date) {
     this.setState({
-      checkOutDateValue: e.target.value,
+      checkOutDateValue: date,
       checkOutDateFlag: true
     });
   }
@@ -104,9 +105,9 @@ class DateContainer extends React.Component {
         this.props.setRoomsFlagAction(true);
         dates =
           "Your search from " +
-          this.state.checkInDateValue +
+          moment(this.state.checkInDateValue).format("DD-MMM-YYYY") +
           " to " +
-          this.state.checkOutDateValue;
+          moment(this.state.checkOutDateValue).format("DD-MMM-YYYY");
       } else {
         alert("Checkout Date Should Be Greater Than CheckIn Date");
       }
@@ -141,24 +142,24 @@ class DateContainer extends React.Component {
         <div className="row">
           <div className="col-sm-6">
             <label>CheckIn date</label>{" "}
-            <input
-              className="form-control"
-              type="date"
-              name="checkIn"
-              id="checkIn"
-              value={this.state.checkInDateValue}
-              onChange={e => this.validCheckInDate(e)}
+            <ModernDatepicker
+              date={this.state.checkInDateValue}
+              format={"DD-MM-YYYY"}
+              showBorder
+              className="cal"
+              onChange={date => this.validCheckInDate(date)}
+              placeholder={"Select a date"}
             />
           </div>
           <div className="col-sm-6">
             <label>CheckOut date</label>{" "}
-            <input
-              className="form-control"
-              type="date"
-              name="checkOut"
-              id="checkOut"
-              value={this.state.checkOutDateValue}
-              onChange={e => this.validCheckOutDate(e)}
+            <ModernDatepicker
+              date={this.state.checkOutDateValue}
+              format={"DD-MM-YYYY"}
+              showBorder
+              className="cal"
+              onChange={date => this.validCheckOutDate(date)}
+              placeholder={"Select a date"}
             />
           </div>
         </div>

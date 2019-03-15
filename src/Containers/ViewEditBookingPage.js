@@ -63,13 +63,17 @@ class ViewEditBookingPage extends React.Component {
                       <div className="checkIn">
                         <label className="labelFor">Check-in Date</label>
                         <label className="labelValue">
-                          {employeeDetail.CheckInDate}
+                          {moment(employeeDetail.CheckInDate).format(
+                            "DD-MM-YYYY"
+                          )}
                         </label>
                       </div>
                       <div className="checkOut">
                         <label className="labelFor">Check-out Date</label>
                         <label className="labelValue">
-                          {employeeDetail.CheckOutDate}
+                          {moment(employeeDetail.CheckOutDate).format(
+                            "DD-MM-YYYY"
+                          )}
                         </label>
                       </div>
                     </div>

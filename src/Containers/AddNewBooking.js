@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import moment from "moment";
+import ModernDatepicker from "react-modern-datepicker";
 import {
   submitNewBooking,
   updateExisitingBooking,
@@ -21,7 +22,9 @@ class AddNewBooking extends React.Component {
       projectId: "",
       occupants: "",
       roomNo: "",
-      roomType: ""
+      roomType: "",
+      alertClassName: "row hideAlert",
+      message: ""
     };
     this.goToHomePage = this.goToHomePage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -64,14 +67,15 @@ class AddNewBooking extends React.Component {
       this.props.setRoomsFlagAction(true, false);
     }
   }
-  handle_checkIn(e) {
+  handle_checkIn(date) {
+    console.log("Checkin date : ", date);
     this.setState({
-      checkIn: moment(e.target.value).format("YYYY-MM-DD")
+      checkIn: date
     });
   }
-  handle_checkOut(e) {
+  handle_checkOut(date) {
     this.setState({
-      checkOut: moment(e.target.value).format("YYYY-MM-DD")
+      checkOut: date
     });
   }
   handle_empId(e) {
@@ -111,7 +115,38 @@ class AddNewBooking extends React.Component {
   }
   handleSubmit(e) {
     let updatedEmployeeObject;
-    if (this.state.empId !== "") {
+    let copyOfRoomdata = [];
+    let countEmpID = 0;
+    copyOfRoomdata = [
+      ...copyOfRoomdata,
+      ...JSON.parse(JSON.stringify(this.props.roomsList.RoomData))
+    ];
+    //check empId doent not exist in the existing RoomData
+    copyOfRoomdata.map((room, i) => {
+      room.BookedEmployeeDetails.map((employee, i) => {
+        if (this.state.empId === employee.EmployeeID) {
+          countEmpID++;
+        }
+        // return employee;
+      });
+      // return room;
+    });
+    console.log("PRINTING Count value : ", countEmpID);
+    if (countEmpID > 0 && this.props.showRoomFlag.addOrUpdate !== "UPDATE") {
+      console.log("Booking Done");
+      this.setState({
+        alertClassName: "row showAlert",
+        message: "Booking is already done for this Employee"
+      });
+      document.getElementById("message").focus();
+      return;
+    }
+    console.log("This shouldn't print when countEmpID > 0");
+    if (
+      this.state.empId !== "" &&
+      this.state.checkIn !== "" &&
+      this.state.checkOut !== ""
+    ) {
       updatedEmployeeObject = {
         EmployeeName: this.state.empName,
         EmployeeID: this.state.empId,
@@ -125,18 +160,17 @@ class AddNewBooking extends React.Component {
         CheckOutDate: this.state.checkOut
       };
     } else {
-      alert("Please provide values");
+      this.setState({
+        alertClassName: "row showAlert",
+        message: "Please provide all values"
+      });
+      document.getElementById("message").focus();
     }
     //check roomsList is coming here :
     console.log(
       "AddNewBooking : handleSubmit() : roomsList ",
       this.props.roomsList
     );
-    let copyOfRoomdata = [];
-    copyOfRoomdata = [
-      ...copyOfRoomdata,
-      ...JSON.parse(JSON.stringify(this.props.roomsList.RoomData))
-    ];
 
     let localVar = copyOfRoomdata.map((room, i) => {
       room.BookedEmployeeDetails = room.BookedEmployeeDetails.filter(
@@ -159,6 +193,7 @@ class AddNewBooking extends React.Component {
       capacity = 0;
     localVar.map((room, i) => {
       if (this.props.selectedRoomDetails.selectedRoom.RoomID === room.RoomID) {
+        console.log("InSide If : ", room.BookedEmployeeDetails);
         empArrLen = room.BookedEmployeeDetails.length;
         capacity = room.Capacity;
       }
@@ -177,9 +212,15 @@ class AddNewBooking extends React.Component {
     );
     if (this.props.showRoomFlag.addOrUpdate === "UPDATE") {
       if (empArrLen === parseInt(capacity, 10)) {
-        alert(
-          "Selected ROOM Is FULL for Selected Dates, Change your dates or Room"
-        );
+        this.setState({
+          alertClassName: "row showAlert",
+          message:
+            "Selected ROOM Is FULL for Selected Dates, Change your dates or Room"
+        });
+        document.getElementById("message").focus();
+        // alert(
+        //   "Selected ROOM Is FULL for Selected Dates, Change your dates or Room"
+        // );
       } else {
         this.props.updateExisitingBooking(updatedEmployeeObject);
         //bookedDetails call to have newly added employeed details to successpage
@@ -200,9 +241,12 @@ class AddNewBooking extends React.Component {
       }
     } else {
       if (empArrLen === parseInt(capacity, 10)) {
-        alert(
-          "Selected ROOM Is FULL for Selected Dates, Change your dates or Room"
-        );
+        this.setState({
+          alertClassName: "row showAlert",
+          message:
+            "Selected ROOM Is FULL for Selected Dates, Change your dates or Room"
+        });
+        document.getElementById("message").focus();
       } else {
         this.props.submitNewBooking(updatedEmployeeObject);
         //bookedDetails call to have newly added employeed details to successpage
@@ -230,15 +274,12 @@ class AddNewBooking extends React.Component {
 
     return (
       <div>
-        <div className="row">
-          <div className="col-sm-3" />
-          <div className="col-sm-6">
-            <div class="alert alert-danger">
-              <strong>Danger!</strong> Selected ROOM Is FULL for Selected Dates,
-              Change your dates or Room.
+        <div className={this.state.alertClassName}>
+          <div className="col-sm-12 text-center">
+            <div class="alert alert-danger message" id="message" tabIndex="0">
+              <strong>Danger!</strong> {this.state.message}
             </div>
           </div>
-          <div className="col-sm-3" />
         </div>
         <div className="row ">
           <div className="col-sm-3" />
@@ -246,7 +287,7 @@ class AddNewBooking extends React.Component {
             <div className="form-group">
               <label>
                 <a href="#" onClick={this.goToHomePage}>
-                  Back{" "}
+                  Back
                 </a>
               </label>
             </div>
@@ -275,27 +316,29 @@ class AddNewBooking extends React.Component {
             </div>
 
             <div className="form-group">
-              <label>CheckIn date :</label>{" "}
-              <input
-                type="date"
-                name="checkIn"
-                value={this.state.checkIn}
-                onChange={e => this.handle_checkIn(e)}
-                className="form-control"
+              <label>CheckIn date :</label>
+              <ModernDatepicker
+                date={this.state.checkIn}
+                format={"DD-MM-YYYY"}
+                showBorder
+                className="cal"
+                onChange={date => this.handle_checkIn(date)}
+                placeholder={"Select a date"}
               />
             </div>
             <div className="form-group">
-              <label>CheckOut date :</label>{" "}
-              <input
-                type="date"
-                name="checkOut"
-                value={this.state.checkOut}
-                onChange={e => this.handle_checkOut(e)}
-                className="form-control"
+              <label>CheckOut date :</label>
+              <ModernDatepicker
+                date={this.state.checkOut}
+                format={"DD-MM-YYYY"}
+                showBorder
+                className="cal"
+                onChange={date => this.handle_checkOut(date)}
+                placeholder={"Select a date"}
               />
             </div>
             <div className="form-group">
-              <label>EmployeeID :</label>{" "}
+              <label>EmployeeID :</label>
               {this.props.showRoomFlag.addOrUpdate === "UPDATE" ? (
                 <label>{this.state.empId}</label>
               ) : (

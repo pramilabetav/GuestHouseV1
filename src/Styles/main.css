@@ -260,3 +260,16 @@ label {
   /* margin-bottom: 20px; */
   /* margin: 0 5px; */
 }
+.hideAlert {
+  display: none !important;
+}
+.showAlert {
+  display: block !important;
+}
+.message:focus {
+  box-shadow: 0px 0px 10px red;
+  outline: 0;
+}
+.cal.cal {
+  background: white;
+}
