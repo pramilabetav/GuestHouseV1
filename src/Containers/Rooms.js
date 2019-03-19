@@ -24,6 +24,7 @@ class Rooms extends React.Component {
     this.props.selectedRoomDetails(room);
   }
   callViewEditPage(room) {
+    console.log("Room : CallViewEditPage Function : room : ", room);
     this.props.setRoomsFlagAction(false, false, true, false, "UPDATE");
     this.props.selectedRoomDetails(room);
   }

@@ -9,12 +9,12 @@ const initialState = {
       Capacity: "2",
       BookedEmployeeDetails: [
         {
-          EmployeeName: "Pummy101",
+          EmployeeName: "EmployeeName101",
           EmployeeID: "1011",
           ProjectID: "P101",
-          ManagerName: "Swapnil101",
+          ManagerName: "ManagerName101",
           CheckInDate: "03-03-2019",
-          CheckOutDate: "03-05-2019"
+          CheckOutDate: "05-03-2019"
         }
       ]
     },
@@ -26,36 +26,36 @@ const initialState = {
       Capacity: "2",
       BookedEmployeeDetails: [
         {
-          EmployeeName: "Pummy1021",
+          EmployeeName: "EmployeeName1021",
           EmployeeID: "1021",
           ProjectID: "P102",
-          ManagerName: "Swapnil102",
+          ManagerName: "ManagerName102",
           CheckInDate: "03-03-2019",
-          CheckOutDate: "03-05-2019"
+          CheckOutDate: "05-03-2019"
         },
         {
-          EmployeeName: "Pummy1022",
+          EmployeeName: "EmployeeName1022",
           EmployeeID: "1022",
           ProjectID: "P1022",
-          ManagerName: "Swapnil1022",
+          ManagerName: "ManagerName1022",
           CheckInDate: "03-03-2019",
-          CheckOutDate: "03-04-2019"
+          CheckOutDate: "04-03-2019"
         },
         {
-          EmployeeName: "Pummy1023",
+          EmployeeName: "EmployeeName1023",
           EmployeeID: "1023",
           ProjectID: "P103",
-          ManagerName: "Swapnil103",
-          CheckInDate: "03-05-2019",
-          CheckOutDate: "03-06-2019"
+          ManagerName: "ManagerName103",
+          CheckInDate: "05-03-2019",
+          CheckOutDate: "06-03-2019"
         },
         {
-          EmployeeName: "Pummy1024",
+          EmployeeName: "EmployeeName1024",
           EmployeeID: "1024",
           ProjectID: "P1024",
-          ManagerName: "Swapnil1024",
-          CheckInDate: "03-05-2019",
-          CheckOutDate: "03-06-2019"
+          ManagerName: "ManagerName1024",
+          CheckInDate: "05-03-2019",
+          CheckOutDate: "06-03-2019"
         }
       ]
     },
@@ -91,20 +91,20 @@ const initialState = {
       Capacity: "2",
       BookedEmployeeDetails: [
         {
-          EmployeeName: "Swapnil106",
+          EmployeeName: "ManagerName106",
           EmployeeID: "1061",
           ProjectID: "P101",
-          ManagerName: "Pummy106",
+          ManagerName: "EmployeeName106",
           CheckInDate: "03-03-2019",
-          CheckOutDate: "03-05-2019"
+          CheckOutDate: "05-03-2019"
         },
         {
           EmployeeName: "Employee106",
           EmployeeID: "1062",
           ProjectID: "P101",
           ManagerName: "Manager106",
-          CheckInDate: "03-02-2019",
-          CheckOutDate: "03-05-2019"
+          CheckInDate: "02-03-2019",
+          CheckOutDate: "05-03-2019"
         }
       ]
     },
@@ -124,20 +124,20 @@ const initialState = {
       Capacity: "2",
       BookedEmployeeDetails: [
         {
-          EmployeeName: "Pummy2011",
+          EmployeeName: "EmployeeName2011",
           EmployeeID: "2011",
           ProjectID: "P201",
-          ManagerName: "Swapnil201",
+          ManagerName: "ManagerName201",
           CheckInDate: "03-03-2019",
-          CheckOutDate: "03-05-2019"
+          CheckOutDate: "05-03-2019"
         },
         {
-          EmployeeName: "Pummy2012",
+          EmployeeName: "EmployeeName2012",
           EmployeeID: "2012",
           ProjectID: "P202",
-          ManagerName: "Swapnil202",
+          ManagerName: "ManagerName202",
           CheckInDate: "03-03-2019",
-          CheckOutDate: "03-05-2019"
+          CheckOutDate: "05-03-2019"
         }
       ]
     },

@@ -51,19 +51,26 @@ class DateContainer extends React.Component {
       ...filterData,
       ...JSON.parse(JSON.stringify(this.props.roomsList.RoomData))
     ];
+    console.log(
+      "BEFORE : this.props.roomsList.RoomData : ",
+      this.props.roomsList.RoomData
+    );
+    console.log("BEFORE FILTER_DATA : filterData : ", filterData);
     localVar = filterData.map((room, i) => {
       room.BookedEmployeeDetails = room.BookedEmployeeDetails.filter(
         (employee, i) => {
-          let CI = moment(checkInDateCompare).format("MM-DD-YYYY");
-          let CO = moment(checkOutDateCompare).format("MM-DD-YYYY");
-          let ECI = moment(employee.CheckInDate).format("MM-DD-YYYY");
-          let ECO = moment(employee.CheckOutDate).format("MM-DD-YYYY");
+          let CI = moment(checkInDateCompare).format("DD-MM-YYYY");
+          let CO = moment(checkOutDateCompare).format("DD-MM-YYYY");
+          let ECI = moment(employee.CheckInDate).format("DD-MM-YYYY");
+          let ECO = moment(employee.CheckOutDate).format("DD-MM-YYYY");
           //1
+          console.log("Which EmployeeID : ", employee.EmployeeID);
           if (CI === ECI && (CO >= ECO || CO < ECO)) {
             console.log("ROOMID --------> ", room.RoomID);
             console.log("1 : Overlap condition ");
             return employee;
           }
+
           //2.1
           else if (
             ((CI > ECI && CI < ECO) || CI < ECI) &&
@@ -85,11 +92,23 @@ class DateContainer extends React.Component {
             console.log("3 : CI and CO Open End OR SuperSet ");
             return employee;
           }
+          //4
+          else if (CI <= ECI && CO > ECI && CO <= ECO) {
+            console.log("ROOMID --------> ", room.RoomID);
+            console.log("4 : CI subset and CO Open End ");
+            return employee;
+          }
+          console.log("######################################################");
         }
       );
       return room;
     });
+    console.log(
+      "Setting FILTER_DATA : CAlling action from DateContainer : ",
+      localVar
+    );
     this.props.filterRoomData(localVar);
+    filterData = [];
     localVar = [];
   }
   handleSearch() {
@@ -119,12 +138,8 @@ class DateContainer extends React.Component {
   componentDidMount() {
     if (this.props.selectedDateReducer) {
       this.setState({
-        checkInDateValue: moment(
-          this.props.selectedDateReducer.checkInDate
-        ).format("YYYY-MM-DD"),
-        checkOutDateValue: moment(
-          this.props.selectedDateReducer.checkOutDate
-        ).format("YYYY-MM-DD"),
+        checkInDateValue: this.props.selectedDateReducer.checkInDate,
+        checkOutDateValue: this.props.selectedDateReducer.checkOutDate,
         checkInDateFlag: true,
         checkOutDateFlag: true
       });
@@ -132,6 +147,8 @@ class DateContainer extends React.Component {
     }
   }
   render() {
+    console.log("CheckIn Date : ", this.state.checkInDateValue);
+    console.log("CheckOut Date : ", this.state.checkOutDateValue);
     return (
       <div className="date_search">
         <div className="panel">

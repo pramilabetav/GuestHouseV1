@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import moment from "moment";
 import ModernDatepicker from "react-modern-datepicker";
 import {
   submitNewBooking,
@@ -47,12 +46,9 @@ class AddNewBooking extends React.Component {
         empId: this.props.selectedEmployeeDetails.employeeDetails.EmployeeID,
         empName: this.props.selectedEmployeeDetails.employeeDetails
           .EmployeeName,
-        checkIn: moment(
-          this.props.selectedEmployeeDetails.employeeDetails.CheckInDate
-        ).format("YYYY-MM-DD"),
-        checkOut: moment(
-          this.props.selectedEmployeeDetails.employeeDetails.CheckOutDate
-        ).format("YYYY-MM-DD"),
+        checkIn: this.props.selectedEmployeeDetails.employeeDetails.CheckInDate,
+        checkOut: this.props.selectedEmployeeDetails.employeeDetails
+          .CheckOutDate,
         managerName: this.props.selectedEmployeeDetails.employeeDetails
           .ManagerName,
         projectId: this.props.selectedEmployeeDetails.employeeDetails.ProjectID
@@ -68,7 +64,6 @@ class AddNewBooking extends React.Component {
     }
   }
   handle_checkIn(date) {
-    console.log("Checkin date : ", date);
     this.setState({
       checkIn: date
     });
@@ -127,13 +122,10 @@ class AddNewBooking extends React.Component {
         if (this.state.empId === employee.EmployeeID) {
           countEmpID++;
         }
-        // return employee;
       });
-      // return room;
     });
-    console.log("PRINTING Count value : ", countEmpID);
+
     if (countEmpID > 0 && this.props.showRoomFlag.addOrUpdate !== "UPDATE") {
-      console.log("Booking Done");
       this.setState({
         alertClassName: "row showAlert",
         message: "Booking is already done for this Employee"
@@ -141,7 +133,7 @@ class AddNewBooking extends React.Component {
       document.getElementById("message").focus();
       return;
     }
-    console.log("This shouldn't print when countEmpID > 0");
+
     if (
       this.state.empId !== "" &&
       this.state.checkIn !== "" &&
@@ -166,79 +158,104 @@ class AddNewBooking extends React.Component {
       });
       document.getElementById("message").focus();
     }
-    //check roomsList is coming here :
-    console.log(
-      "AddNewBooking : handleSubmit() : roomsList ",
-      this.props.roomsList
-    );
-
+    //Pummy
+    let checkInDateCompare = this.state.checkIn;
+    let checkOutDateCompare = this.state.checkOut;
     let localVar = copyOfRoomdata.map((room, i) => {
-      room.BookedEmployeeDetails = room.BookedEmployeeDetails.filter(
-        (employee, i) => {
-          if (
-            moment(this.state.checkIn).format("MM-DD-YYYY") ===
-              moment(employee.CheckInDate).format("MM-DD-YYYY") &&
-            moment(this.state.checkOut).format("MM-DD-YYYY") ===
-              moment(employee.CheckOutDate).format("MM-DD-YYYY")
-          ) {
-            return employee;
+      if (this.props.selectedRoomDetails.selectedRoom.RoomID === room.RoomID) {
+        room.BookedEmployeeDetails = room.BookedEmployeeDetails.filter(
+          (employee, i) => {
+            let CI = checkInDateCompare;
+            let CO = checkOutDateCompare;
+            let ECI = employee.CheckInDate;
+            let ECO = employee.CheckOutDate;
+            console.log(
+              " Checking CI and ECI : ",
+              checkInDateCompare,
+              " and ",
+              employee.CheckInDate
+            );
+            console.log(
+              " Checking CO and ECO : ",
+              checkOutDateCompare,
+              " and ",
+              employee.CheckOutDate
+            );
+            //1
+            if (CI === ECI && (CO >= ECO || CO < ECO)) {
+              console.log("ROOMID --------> ", room.RoomID);
+              console.log("1 : Overlap condition ");
+              return employee;
+            }
+            //2.1
+            else if (
+              ((CI > ECI && CI < ECO) || CI < ECI) &&
+              (CO > ECI && CO < ECO)
+            ) {
+              console.log("ROOMID --------> ", room.RoomID);
+              console.log("2.1 : CI Open End OR SubSet ");
+              return employee;
+            }
+            //2.2
+            else if (CI > ECI && CI < ECO && (CO >= ECO || CO < ECO)) {
+              console.log("ROOMID --------> ", room.RoomID);
+              console.log("2.2 : CO Open End OR SubSet ");
+              return employee;
+            }
+            //3
+            else if (CI < ECI && CO > ECO) {
+              console.log("ROOMID --------> ", room.RoomID);
+              console.log("3 : CI and CO Open End OR SuperSet ");
+              return employee;
+            }
+            //4
+            else if (CI <= ECI && CO > ECI && CO <= ECO) {
+              console.log("ROOMID --------> ", room.RoomID);
+              console.log("4 : CI subset and CO Open End ");
+              return employee;
+            }
           }
-        }
-      );
+        );
+      }
       return room;
     });
+    //Betav
 
-    console.log("AddNewBooking : localVar : Printing ", localVar);
     let empArrLen,
       capacity = 0;
     localVar.map((room, i) => {
       if (this.props.selectedRoomDetails.selectedRoom.RoomID === room.RoomID) {
-        console.log("InSide If : ", room.BookedEmployeeDetails);
         empArrLen = room.BookedEmployeeDetails.length;
         capacity = room.Capacity;
       }
       return room;
     });
-    console.log(
-      "empArrLen : capacity : ",
-      empArrLen,
-      " Type : ",
-      typeof empArrLen,
-      " , ",
-      " capacity : ",
-      capacity,
-      " TypeOf : ",
-      typeof capacity
-    );
     if (this.props.showRoomFlag.addOrUpdate === "UPDATE") {
-      if (empArrLen === parseInt(capacity, 10)) {
-        this.setState({
-          alertClassName: "row showAlert",
-          message:
-            "Selected ROOM Is FULL for Selected Dates, Change your dates or Room"
-        });
-        document.getElementById("message").focus();
-        // alert(
-        //   "Selected ROOM Is FULL for Selected Dates, Change your dates or Room"
-        // );
-      } else {
-        this.props.updateExisitingBooking(updatedEmployeeObject);
-        //bookedDetails call to have newly added employeed details to successpage
-        this.props.bookedDetails(updatedEmployeeObject);
-        this.props.setRoomsFlagAction(false, false, false, true);
-        //call success Page
-        this.setState({
-          checkIn: "",
-          checkOut: "",
-          empId: "",
-          empName: "",
-          managerName: "",
-          projectId: "",
-          occupants: "",
-          roomNo: "",
-          roomType: ""
-        });
-      }
+      // if (empArrLen === parseInt(capacity, 10)) {
+      //   this.setState({
+      //     alertClassName: "row showAlert",
+      //     message:
+      //       "Selected ROOM Is FULL for Selected Dates, Change your dates or Room"
+      //   });
+      //   document.getElementById("message").focus();
+      // } else {
+      this.props.updateExisitingBooking(updatedEmployeeObject);
+      //bookedDetails call to have newly added employeed details to successpage
+      this.props.bookedDetails(updatedEmployeeObject);
+      this.props.setRoomsFlagAction(false, false, false, true);
+      //call success Page
+      this.setState({
+        checkIn: "",
+        checkOut: "",
+        empId: "",
+        empName: "",
+        managerName: "",
+        projectId: "",
+        occupants: "",
+        roomNo: "",
+        roomType: ""
+      });
+      // }
     } else {
       if (empArrLen === parseInt(capacity, 10)) {
         this.setState({
@@ -251,6 +268,8 @@ class AddNewBooking extends React.Component {
         this.props.submitNewBooking(updatedEmployeeObject);
         //bookedDetails call to have newly added employeed details to successpage
         this.props.bookedDetails(updatedEmployeeObject);
+        //need to call this.props.filterRoomData functio n to update its value for ViewEditBookingPage
+
         this.props.setRoomsFlagAction(false, false, false, true);
         //call success Page
         this.setState({

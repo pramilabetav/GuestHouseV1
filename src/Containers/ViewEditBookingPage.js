@@ -1,6 +1,5 @@
 import React from "react";
 import { bindActionCreators } from "redux";
-import moment from "moment";
 //import { editSelectedBooking, deleteSelectedBooking } from "../Actions";
 import {
   selectedEmployeeDetails,
@@ -22,8 +21,8 @@ class ViewEditBookingPage extends React.Component {
   }
   goToHomePage() {
     this.props.selectedDate(
-      moment(this.props.selectedDates.checkInDate).format("YYYY-MM-DD"),
-      moment(this.props.selectedDates.checkOutDate).format("YYYY-MM-DD")
+      this.props.selectedDates.checkInDate,
+      this.props.selectedDates.checkOutDate
     );
     this.props.setRoomsFlagAction(true, false, false, false, "");
   }
@@ -42,6 +41,10 @@ class ViewEditBookingPage extends React.Component {
     );
   }
   render() {
+    console.log(
+      "ViewEditBookingPage : ",
+      this.props.selectedRoomDetails.selectedRoom
+    );
     let empLen = this.props.selectedRoomDetails.selectedRoom
       .BookedEmployeeDetails.length;
     let bookedEmpData;
@@ -63,17 +66,13 @@ class ViewEditBookingPage extends React.Component {
                       <div className="checkIn">
                         <label className="labelFor">Check-in Date</label>
                         <label className="labelValue">
-                          {moment(employeeDetail.CheckInDate).format(
-                            "DD-MM-YYYY"
-                          )}
+                          {employeeDetail.CheckInDate}
                         </label>
                       </div>
                       <div className="checkOut">
                         <label className="labelFor">Check-out Date</label>
                         <label className="labelValue">
-                          {moment(employeeDetail.CheckOutDate).format(
-                            "DD-MM-YYYY"
-                          )}
+                          {employeeDetail.CheckOutDate}
                         </label>
                       </div>
                     </div>
