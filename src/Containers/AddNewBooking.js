@@ -33,11 +33,11 @@ class AddNewBooking extends React.Component {
     this.handle_empName = this.handle_empName.bind(this);
     this.handle_managerName = this.handle_managerName.bind(this);
     this.handle_projectId = this.handle_projectId.bind(this);
-    this.handle_occupants = this.handle_occupants.bind(this);
-    this.handle_roomNo = this.handle_roomNo.bind(this);
-    this.handle_roomType = this.handle_roomType.bind(this);
-  }
-  componentDidMount() {
+    //   // this.handle_occupants = this.handle_occupants.bind(this);
+    //   this.handle_roomNo = this.handle_roomNo.bind(this);
+    //   this.handle_roomType = this.handle_roomType.bind(this);
+    // }
+    // componentDidMount() {
     if (this.props.showRoomFlag.addOrUpdate === "UPDATE") {
       let checkdatein = new Date(
         this.props.selectedEmployeeDetails.employeeDetails.CheckInDate
@@ -93,11 +93,11 @@ class AddNewBooking extends React.Component {
       projectId: e.target.value
     });
   }
-  handle_occupants(e) {
-    this.setState({
-      occupants: e.target.value
-    });
-  }
+  // handle_occupants(e) {
+  //   this.setState({
+  // occupants: e.target.value
+  //   });
+  // }
   handle_roomNo(e) {
     this.setState({
       roomNo: e.target.value
@@ -167,20 +167,9 @@ class AddNewBooking extends React.Component {
           (employee, i) => {
             let CI = checkInDateCompare;
             let CO = checkOutDateCompare;
-            let ECI = employee.CheckInDate;
+            let ECI   = employee.CheckInDate;
             let ECO = employee.CheckOutDate;
-            console.log(
-              " Checking CI and ECI : ",
-              checkInDateCompare,
-              " and ",
-              employee.CheckInDate
-            );
-            console.log(
-              " Checking CO and ECO : ",
-              checkOutDateCompare,
-              " and ",
-              employee.CheckOutDate
-            );
+
             //1
             if (CI === ECI && (CO >= ECO || CO < ECO)) {
               console.log("ROOMID --------> ", room.RoomID);
@@ -268,8 +257,6 @@ class AddNewBooking extends React.Component {
         this.props.submitNewBooking(updatedEmployeeObject);
         //bookedDetails call to have newly added employeed details to successpage
         this.props.bookedDetails(updatedEmployeeObject);
-        //need to call this.props.filterRoomData functio n to update its value for ViewEditBookingPage
-
         this.props.setRoomsFlagAction(false, false, false, true);
         //call success Page
         this.setState({
@@ -279,7 +266,7 @@ class AddNewBooking extends React.Component {
           empName: "",
           managerName: "",
           projectId: "",
-          occupants: "",
+          // occupants: "",
           roomNo: "",
           roomType: ""
         });
@@ -322,18 +309,6 @@ class AddNewBooking extends React.Component {
                 {this.props.selectedRoomDetails.selectedRoom.RoomType}
               </label>
             </div>
-            <div className="form-group">
-              <label>No. Of Occupants :</label>
-              <select
-                value={this.state.occupants}
-                onChange={e => this.handle_occupants(e)}
-                className="form-control"
-              >
-                <option value="1">1</option>
-                <option value="2">2</option>
-              </select>
-            </div>
-
             <div className="form-group">
               <label>CheckIn date :</label>
               <ModernDatepicker

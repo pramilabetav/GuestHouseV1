@@ -33,6 +33,7 @@ class Rooms extends React.Component {
     // this.props.resetRoomDataValue();
   }
   render() {
+    console.log("Room Component : gapArrayData : ", this.props.gapArrayData);
     let localFilterRoomData = [];
     if (this.props.filterRoomData) {
       localFilterRoomData = this.props.filterRoomData.filterData;
@@ -40,19 +41,37 @@ class Rooms extends React.Component {
     let selectClass;
     let titleData;
     var returnRoomDisplayData = localFilterRoomData.map((room, i) => {
-      if (room.BookedEmployeeDetails.length >= parseInt(room.Capacity, 10)) {
-        selectClass = "roomDetails room-booked";
-        titleData = "Booking is Full";
-      } else if (
-        room.BookedEmployeeDetails.length < parseInt(room.Capacity, 10) &&
-        room.BookedEmployeeDetails.length > "0"
-      ) {
-        selectClass = "roomDetails room-partialbooked";
-        titleData = "Add A New Room";
-      } else {
+      if (room.BookedEmployeeDetails.length === 0) {
         selectClass = "roomDetails room-vacant";
         titleData = "Add A New Room";
+      } else {
+        this.props.gapArrayData.gapArray.map((gap, i) => {
+          if (
+            gap.roomID === room.RoomID ||
+            room.BookedEmployeeDetails.length > 0
+          ) {
+            selectClass = "roomDetails room-partialbooked";
+            titleData = "Add A New Room";
+          } else {
+            selectClass = "roomDetails room-booked";
+            titleData = "Booking is Full";
+          }
+        });
       }
+
+      // if (room.BookedEmployeeDetails.length >= parseInt(room.Capacity, 10)) {
+      //   selectClass = "roomDetails room-booked";
+      //   titleData = "Booking is Full";
+      // } else if (
+      //   room.BookedEmployeeDetails.length < parseInt(room.Capacity, 10) &&
+      //   room.BookedEmployeeDetails.length > "0"
+      // ) {
+      //   selectClass = "roomDetails room-partialbooked";
+      //   titleData = "Add A New Room";
+      // } else {
+      //   selectClass = "roomDetails room-vacant";
+      //   titleData = "Add A New Room";
+      // }
       return (
         <div className="room" key={i}>
           <div
@@ -75,13 +94,13 @@ class Rooms extends React.Component {
         </div>
       );
     });
-    <div className="row">
-      <div className="col-sm-12">
-        <a href="#" onClick={this.goToHomePage}>
-          Back
-        </a>
-      </div>
-    </div>;
+    // <div className="row">
+    //   <div className="col-sm-12">
+    //     <a href="#" onClick={this.goToHomePage}>
+    //       Back
+    //     </a>
+    //   </div>
+    // </div>;
     return (
       <div className="roomAvailability">
         <div className="row">
@@ -120,7 +139,8 @@ function mapStateToProps(state) {
   return {
     filterRoomData: state.filterRoomData,
     showRoomFlag: state.showRoomFlag,
-    selectedDates: state.dateReducer
+    selectedDates: state.dateReducer,
+    gapArrayData: state.gapArrayData
   };
 }
 

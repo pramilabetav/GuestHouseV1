@@ -3,7 +3,12 @@ import React from "react";
 import moment from "moment";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setRoomsFlagAction, filterRoomData, selectedDate } from "../Actions";
+import {
+  setRoomsFlagAction,
+  filterRoomData,
+  selectedDate,
+  setGapArrayValue
+} from "../Actions";
 import ModernDatepicker from "react-modern-datepicker";
 let dates, localVar;
 class DateContainer extends React.Component {
@@ -38,6 +43,9 @@ class DateContainer extends React.Component {
     let filterData = [];
     let checkInDateCompare;
     let checkOutDateCompare;
+    let gapRoomArray = [];
+    let preCO;
+    // let gapArray = [];
     if (this.state.checkInDateValue && this.state.checkOutDateValue) {
       checkInDateCompare = this.state.checkInDateValue;
       checkOutDateCompare = this.state.checkOutDateValue;
@@ -65,29 +73,102 @@ class DateContainer extends React.Component {
           let ECO = moment(employee.CheckOutDate).format("DD-MM-YYYY");
           //1
           console.log("Which EmployeeID : ", employee.EmployeeID);
-          if (CI === ECI && (CO >= ECO || CO < ECO)) {
+          if (CI === ECI && CO >= ECO) {
             console.log("ROOMID --------> ", room.RoomID);
-            console.log("1 : Overlap condition ");
+            console.log("1.1 : Overlap condition ");
+            if (CO > ECO) {
+              // gapRoomArray.push({
+              //   roomID: room.RoomID,
+              //   availFrom: ECO,
+              //   availTo: CO
+              // });
+              flag = true;
+              console.log("Is GapArray Added : ", gapRoomArray);
+              console.log("----------------------------------------------");
+            }
+            return employee;
+          } else if (CI === ECI && CO < ECO) {
+            console.log("ROOMID --------> ", room.RoomID);
+            console.log("1.2 : Overlap condition ");
+            gapRoomArray.push({
+              roomID: room.RoomID,
+              availFrom: CO,
+              availTo: ECO
+            });
+            console.log("Is GapArray Added : ", gapRoomArray);
+            console.log("----------------------------------------------");
+            return employee;
+          }
+          //2.1
+          else if (CI > ECI && CI < ECO && (CO > ECI && CO < ECO)) {
+            console.log("ROOMID --------> ", room.RoomID);
+            console.log("2.1.1 : CI Open End OR SubSet ");
+            gapRoomArray.push({
+              roomID: room.RoomID,
+              availFrom: CO,
+              availTo: ECO
+            });
+            console.log("Is GapArray Added : ", gapRoomArray);
+            console.log("----------------------------------------------");
+            return employee;
+          } else if (CI < ECI && (CO > ECI && CO < ECO)) {
+            console.log("ROOMID --------> ", room.RoomID);
+            console.log("2.1.2 : CI Open End OR SubSet ");
+            gapRoomArray.push({
+              roomID: room.RoomID,
+              availFrom: CI,
+              availTo: ECI
+            });
+            gapRoomArray.push({
+              roomID: room.RoomID,
+              availFrom: CO,
+              availTo: ECO
+            });
+            console.log("Is GapArray Added : ", gapRoomArray);
+            console.log("----------------------------------------------");
             return employee;
           }
 
-          //2.1
-          else if (
-            ((CI > ECI && CI < ECO) || CI < ECI) &&
-            (CO > ECI && CO < ECO)
-          ) {
-            console.log("ROOMID --------> ", room.RoomID);
-            console.log("2.1 : CI Open End OR SubSet ");
-            return employee;
-          }
           //2.2
-          else if (CI > ECI && CI < ECO && (CO >= ECO || CO < ECO)) {
+          else if (CI > ECI && CI < ECO && CO >= ECO) {
             console.log("ROOMID --------> ", room.RoomID);
-            console.log("2.2 : CO Open End OR SubSet ");
+            console.log("2.2.1 : CO Open End OR SubSet ");
+            if (CO > ECO) {
+              gapRoomArray.push({
+                roomID: room.RoomID,
+                availFrom: ECO,
+                availTo: CO
+              });
+            }
+            console.log("Is GapArray Added : ", gapRoomArray);
+            console.log("----------------------------------------------");
+            return employee;
+          } else if (CI > ECI && CI < ECO && CO < ECO) {
+            console.log("ROOMID --------> ", room.RoomID);
+            console.log("2.2.2 : CO Open End OR SubSet ");
+
+            gapRoomArray.push({
+              roomID: room.RoomID,
+              availFrom: CO,
+              availTo: ECO
+            });
+            console.log("Is GapArray Added : ", gapRoomArray);
+            console.log("----------------------------------------------");
             return employee;
           }
+
           //3
           else if (CI < ECI && CO > ECO) {
+            gapRoomArray.push({
+              roomID: room.RoomID,
+              availFrom: CI,
+              availTo: ECI
+            });
+            gapRoomArray.push({
+              roomID: room.RoomID,
+              availFrom: ECO,
+              availTo: CO
+            });
             console.log("ROOMID --------> ", room.RoomID);
             console.log("3 : CI and CO Open End OR SuperSet ");
             return employee;
@@ -96,9 +177,35 @@ class DateContainer extends React.Component {
           else if (CI <= ECI && CO > ECI && CO <= ECO) {
             console.log("ROOMID --------> ", room.RoomID);
             console.log("4 : CI subset and CO Open End ");
+            if (CI < ECI) {
+              gapRoomArray.push({
+                roomID: room.RoomID,
+                availFrom: CI,
+                availTo: ECI
+              });
+            }
+            if (CO < ECO) {
+              gapRoomArray.push({
+                roomID: room.RoomID,
+                availFrom: CO,
+                availTo: ECO
+              });
+            }
+
+            console.log("Is GapArray Added : ", gapRoomArray);
+            console.log("----------------------------------------------");
             return employee;
           }
           console.log("######################################################");
+          if (CO > ECO) {
+            gapRoomArray.push({
+              roomID: room.RoomID,
+              availFrom: ECO,
+              availTo: CO
+            });
+            console.log("Is GapArray Added : ", gapRoomArray);
+            console.log("----------------------------------------------");
+          }
         }
       );
       return room;
@@ -107,9 +214,13 @@ class DateContainer extends React.Component {
       "Setting FILTER_DATA : CAlling action from DateContainer : ",
       localVar
     );
+    console.log("DateContainer : gapRoomArray : ", gapRoomArray);
+    //Create new reducer for GapArray
+    this.props.setGapArrayValue(gapRoomArray);
     this.props.filterRoomData(localVar);
     filterData = [];
     localVar = [];
+    gapRoomArray = [];
   }
   handleSearch() {
     if (this.state.checkInDateFlag && this.state.checkOutDateFlag) {
@@ -211,6 +322,7 @@ function mapDispatchToProps(dispatch) {
     {
       setRoomsFlagAction: setRoomsFlagAction,
       filterRoomData: filterRoomData,
+      setGapArrayValue: setGapArrayValue,
       selectedDate: selectedDate
     },
     dispatch

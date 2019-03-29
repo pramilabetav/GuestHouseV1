@@ -10,6 +10,9 @@ import ViewEditBookingPage from "./ViewEditBookingPage";
 class HomePage extends React.Component {
   //create a function to return specific component to display
   render() {
+    const randomNum = Math.random();
+    console.log("HomePage: randomNum : ", randomNum);
+
     return (
       <div className="container">
         {this.props.showRoomFlag.editFlag ? (

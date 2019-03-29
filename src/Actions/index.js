@@ -173,3 +173,12 @@ export function selectedDate(checkInDate, checkOutDate) {
     }
   };
 }
+
+export function setGapArrayValue(gapArray) {
+  console.log("Action : GAP_ARRAY", gapArray, " , ", gapArray);
+
+  return {
+    type: "GAP_ARRAY",
+    payload: { gapArray: gapArray }
+  };
+}
