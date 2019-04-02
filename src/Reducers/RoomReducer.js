@@ -288,7 +288,7 @@ export default function showRoomsList(state = initialState, action) {
             if (
               employee.EmployeeID === action.payload.employeeDetails.EmployeeID
             ) {
-              room.BookedEmployeeDetails.splice(i, i + 1);
+              room.BookedEmployeeDetails.splice(i, 1);
             }
           }
         });

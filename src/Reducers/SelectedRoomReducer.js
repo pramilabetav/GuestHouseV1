@@ -11,7 +11,7 @@ export default function showRoomsList(state = null, action) {
           if (emp.EmployeeID === action.payload.employeeDetails.EmployeeID) {
             action.payload.selectedRoomData.selectedRoom.BookedEmployeeDetails.splice(
               i,
-              i + 1
+              1
             );
           }
         }

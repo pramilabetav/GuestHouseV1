@@ -36,12 +36,9 @@ class AddNewBooking extends React.Component {
     //   // this.handle_occupants = this.handle_occupants.bind(this);
     //   this.handle_roomNo = this.handle_roomNo.bind(this);
     //   this.handle_roomType = this.handle_roomType.bind(this);
-    // }
-    // componentDidMount() {
+  }
+  componentDidMount() {
     if (this.props.showRoomFlag.addOrUpdate === "UPDATE") {
-      let checkdatein = new Date(
-        this.props.selectedEmployeeDetails.employeeDetails.CheckInDate
-      );
       this.setState({
         empId: this.props.selectedEmployeeDetails.employeeDetails.EmployeeID,
         empName: this.props.selectedEmployeeDetails.employeeDetails
@@ -167,7 +164,7 @@ class AddNewBooking extends React.Component {
           (employee, i) => {
             let CI = checkInDateCompare;
             let CO = checkOutDateCompare;
-            let ECI   = employee.CheckInDate;
+            let ECI = employee.CheckInDate;
             let ECO = employee.CheckOutDate;
 
             //1

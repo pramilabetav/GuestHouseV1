@@ -26,6 +26,7 @@ class DateContainer extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.searchAvailability = this.searchAvailability.bind(this);
     this.findDateSuggestion = this.findDateSuggestion.bind(this);
+    this.returnLocalVarData = this.returnLocalVarData.bind(this);
   }
 
   validCheckInDate(date) {
@@ -35,31 +36,19 @@ class DateContainer extends React.Component {
     });
   }
   validCheckOutDate(date) {
+    console.log("ValidCheckInDate : ", date);
     this.setState({
       checkOutDateValue: date,
       checkOutDateFlag: true
     });
   }
-  findDateSuggestion(filterData) {
-    let checkInDateCompare;
-    let checkOutDateCompare;
+  findDateSuggestion(filterData, checkInDateCompare, checkOutDateCompare) {
     let gapRoomArray = [];
     let empBookings = [];
     let occupiedCounter = 0;
 
-    // let gapArray = [];
-    if (this.state.checkInDateValue && this.state.checkOutDateValue) {
-      checkInDateCompare = this.state.checkInDateValue;
-      checkOutDateCompare = this.state.checkOutDateValue;
-    } else {
-      if (this.props.selectedDateReducer) {
-        checkInDateCompare = this.props.selectedDateReducer.checkInDate;
-        checkOutDateCompare = this.props.selectedDateReducer.checkOutDate;
-      }
-    }
-
-    let CI = moment(checkInDateCompare).format("DD-MM-YYYY");
-    let CO = moment(checkOutDateCompare).format("DD-MM-YYYY");
+    // let CI = moment(checkInDateCompare).format("DD-MM-YYYY");
+    // let CO = moment(checkOutDateCompare).format("DD-MM-YYYY");
     var startDate = moment(checkInDateCompare, "DD-MM-YYYY");
     var endDate = moment(checkOutDateCompare, "DD-MM-YYYY");
     var daysDiff = endDate.diff(startDate, "days");
@@ -137,38 +126,8 @@ class DateContainer extends React.Component {
     this.props.setGapArrayValue(gapRoomArray);
     gapRoomArray = [];
   }
-  searchAvailability() {
-    let filterData = [];
-    let checkInDateCompare;
-    let checkOutDateCompare;
-    let gapRoomArray = [];
-    let empBookings = [];
-    let occupiedCounter = 0;
-
-    // let gapArray = [];
-    if (this.state.checkInDateValue && this.state.checkOutDateValue) {
-      checkInDateCompare = this.state.checkInDateValue;
-      checkOutDateCompare = this.state.checkOutDateValue;
-    } else {
-      if (this.props.selectedDateReducer) {
-        checkInDateCompare = this.props.selectedDateReducer.checkInDate;
-        checkOutDateCompare = this.props.selectedDateReducer.checkOutDate;
-      }
-    }
-    filterData = [
-      ...filterData,
-      ...JSON.parse(JSON.stringify(this.props.roomsList.RoomData))
-    ];
-    //call function suggestion function here
-    this.findDateSuggestion(filterData);
-
-    console.log(
-      "BEFORE : this.props.roomsList.RoomData : ",
-      this.props.roomsList.RoomData
-    );
-    console.log("BEFORE FILTER_DATA : filterData : ", filterData);
-    //call set filterRoomData
-    localVar = filterData.map((room, i) => {
+  returnLocalVarData(filterData, checkInDateCompare, checkOutDateCompare) {
+    let localData = filterData.map((room, i) => {
       room.BookedEmployeeDetails = room.BookedEmployeeDetails.filter(
         (employee, i) => {
           let CI = moment(checkInDateCompare).format("DD-MM-YYYY");
@@ -215,6 +174,48 @@ class DateContainer extends React.Component {
       );
       return room;
     });
+    return localData;
+  }
+  searchAvailability() {
+    let filterData = [];
+    let checkInDateCompare;
+    let checkOutDateCompare;
+    let gapRoomArray = [];
+    let empBookings = [];
+    let occupiedCounter = 0;
+
+    // let gapArray = [];
+    if (this.state.checkInDateValue && this.state.checkOutDateValue) {
+      checkInDateCompare = this.state.checkInDateValue;
+      checkOutDateCompare = this.state.checkOutDateValue;
+    } else {
+      if (this.props.selectedDateReducer) {
+        checkInDateCompare = this.props.selectedDateReducer.checkInDate;
+        checkOutDateCompare = this.props.selectedDateReducer.checkOutDate;
+      }
+    }
+    filterData = [
+      ...filterData,
+      ...JSON.parse(JSON.stringify(this.props.roomsList.RoomData))
+    ];
+    //call function suggestion function here
+    this.findDateSuggestion(
+      filterData,
+      checkInDateCompare,
+      checkOutDateCompare
+    );
+
+    console.log(
+      "BEFORE : this.props.roomsList.RoomData : ",
+      this.props.roomsList.RoomData
+    );
+    console.log("BEFORE FILTER_DATA : filterData : ", filterData);
+    //call set filterRoomData
+    localVar = this.returnLocalVarData(
+      filterData,
+      checkInDateCompare,
+      checkOutDateCompare
+    );
 
     console.log(
       "Setting FILTER_DATA : CAlling action from DateContainer : ",
@@ -235,11 +236,19 @@ class DateContainer extends React.Component {
         );
         //   //Call the Action
         this.props.setRoomsFlagAction(true);
+        console.log(
+          "HandleSearch : this.state.checkInDateValue : ",
+          this.state.checkInDateValue
+        );
+        console.log(
+          "HandleSearch : this.state.checkOutDateValue : ",
+          this.state.checkOutDateValue
+        );
         dates =
           "Your search from " +
-          moment(this.state.checkInDateValue).format("DD-MMM-YYYY") +
+          this.state.checkInDateValue +
           " to " +
-          moment(this.state.checkOutDateValue).format("DD-MMM-YYYY");
+          this.state.checkOutDateValue;
       } else {
         alert("Checkout Date Should Be Greater Than CheckIn Date");
       }
