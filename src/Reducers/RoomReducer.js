@@ -9,12 +9,44 @@ const initialState = {
       Capacity: "2",
       BookedEmployeeDetails: [
         {
-          EmployeeName: "EmployeeName101",
+          EmployeeName: "EmployeeName1011",
           EmployeeID: "1011",
           ProjectID: "P101",
           ManagerName: "ManagerName101",
-          CheckInDate: "03-03-2019",
-          CheckOutDate: "05-03-2019"
+          CheckInDate: "03-04-2019",
+          CheckOutDate: "05-04-2019"
+        },
+        {
+          EmployeeName: "EmployeeName1012",
+          EmployeeID: "1012",
+          ProjectID: "P101",
+          ManagerName: "ManagerName101",
+          CheckInDate: "05-04-2019",
+          CheckOutDate: "06-04-2019"
+        },
+        {
+          EmployeeName: "EmployeeName1013",
+          EmployeeID: "1013",
+          ProjectID: "P101",
+          ManagerName: "ManagerName101",
+          CheckInDate: "06-04-2019",
+          CheckOutDate: "07-04-2019"
+        },
+        {
+          EmployeeName: "EmployeeName1014",
+          EmployeeID: "1014",
+          ProjectID: "P101",
+          ManagerName: "ManagerName101",
+          CheckInDate: "03-04-2019",
+          CheckOutDate: "04-04-2019"
+        },
+        {
+          EmployeeName: "EmployeeName1015",
+          EmployeeID: "1015",
+          ProjectID: "P101",
+          ManagerName: "ManagerName101",
+          CheckInDate: "05-04-2019",
+          CheckOutDate: "06-04-2019"
         }
       ]
     },
@@ -30,32 +62,48 @@ const initialState = {
           EmployeeID: "1021",
           ProjectID: "P102",
           ManagerName: "ManagerName102",
-          CheckInDate: "03-03-2019",
-          CheckOutDate: "05-03-2019"
+          CheckInDate: "01-04-2019",
+          CheckOutDate: "03-04-2019"
         },
         {
           EmployeeName: "EmployeeName1022",
           EmployeeID: "1022",
           ProjectID: "P1022",
           ManagerName: "ManagerName1022",
-          CheckInDate: "03-03-2019",
-          CheckOutDate: "04-03-2019"
+          CheckInDate: "05-04-2019",
+          CheckOutDate: "07-04-2019"
         },
         {
           EmployeeName: "EmployeeName1023",
           EmployeeID: "1023",
           ProjectID: "P103",
           ManagerName: "ManagerName103",
-          CheckInDate: "05-03-2019",
-          CheckOutDate: "06-03-2019"
+          CheckInDate: "14-04-2019",
+          CheckOutDate: "15-04-2019"
         },
         {
           EmployeeName: "EmployeeName1024",
           EmployeeID: "1024",
           ProjectID: "P1024",
           ManagerName: "ManagerName1024",
-          CheckInDate: "05-03-2019",
-          CheckOutDate: "06-03-2019"
+          CheckInDate: "04-04-2019",
+          CheckOutDate: "05-04-2019"
+        },
+        {
+          EmployeeName: "EmployeeName1025",
+          EmployeeID: "1025",
+          ProjectID: "P1024",
+          ManagerName: "ManagerName1024",
+          CheckInDate: "10-04-2019",
+          CheckOutDate: "12-04-2019"
+        },
+        {
+          EmployeeName: "EmployeeName1026",
+          EmployeeID: "1026",
+          ProjectID: "P1024",
+          ManagerName: "ManagerName1024",
+          CheckInDate: "05-04-2019",
+          CheckOutDate: "07-04-2019"
         }
       ]
     },
@@ -65,7 +113,32 @@ const initialState = {
       RoomType: "Shared",
       ActiveStatus: "A",
       Capacity: "2",
-      BookedEmployeeDetails: []
+      BookedEmployeeDetails: [
+        {
+          EmployeeName: "EmployeeName1022",
+          EmployeeID: "1031",
+          ProjectID: "P1022",
+          ManagerName: "ManagerName1022",
+          CheckInDate: "01-04-2019",
+          CheckOutDate: "03-04-2019"
+        },
+        {
+          EmployeeName: "EmployeeName1023",
+          EmployeeID: "1032",
+          ProjectID: "P103",
+          ManagerName: "ManagerName103",
+          CheckInDate: "04-04-2019",
+          CheckOutDate: "06-04-2019"
+        },
+        {
+          EmployeeName: "EmployeeName1024",
+          EmployeeID: "1034",
+          ProjectID: "P1024",
+          ManagerName: "ManagerName1024",
+          CheckInDate: "09-04-2019",
+          CheckOutDate: "10-04-2019"
+        }
+      ]
     },
     {
       RoomID: "104",
