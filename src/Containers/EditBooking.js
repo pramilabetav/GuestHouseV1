@@ -6,7 +6,6 @@ class EditBooking extends React.Component {
     this.state = {};
   }
   render() {
-    console.log("Calling EditBooking Component");
     return (
       <div>
         <h2>
