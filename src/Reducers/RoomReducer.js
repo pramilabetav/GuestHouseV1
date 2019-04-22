@@ -1,4 +1,6 @@
 import moment from "moment";
+import { config } from "../Configs/Config";
+
 const initialState = {
   RoomData: [
     {
@@ -146,7 +148,24 @@ const initialState = {
       RoomType: "Shared",
       ActiveStatus: "A",
       Capacity: "2",
-      BookedEmployeeDetails: []
+      BookedEmployeeDetails: [
+        {
+          EmployeeName: "EmployeeName1041",
+          EmployeeID: "1041",
+          ProjectID: "P1022",
+          ManagerName: "ManagerName1022",
+          CheckInDate: "01-04-2019",
+          CheckOutDate: "03-04-2019"
+        },
+        {
+          EmployeeName: "EmployeeName1042",
+          EmployeeID: "1042",
+          ProjectID: "P1022",
+          ManagerName: "ManagerName1022",
+          CheckInDate: "01-04-2019",
+          CheckOutDate: "03-04-2019"
+        }
+      ]
     },
     {
       RoomID: "105",
@@ -168,8 +187,8 @@ const initialState = {
           EmployeeID: "1061",
           ProjectID: "P101",
           ManagerName: "EmployeeName106",
-          CheckInDate: "03-03-2019",
-          CheckOutDate: "05-03-2019"
+          CheckInDate: "03-04-2019",
+          CheckOutDate: "05-04-2019"
         },
         {
           EmployeeName: "Employee106",
@@ -260,16 +279,41 @@ const initialState = {
       RoomType: "Shared",
       ActiveStatus: "A",
       Capacity: "2",
-      BookedEmployeeDetails: []
+      BookedEmployeeDetails: [
+        {
+          EmployeeName: "EmployeeName2071",
+          EmployeeID: "1041",
+          ProjectID: "P1022",
+          ManagerName: "ManagerName1022",
+          CheckInDate: "12-04-2019",
+          CheckOutDate: "14-04-2019"
+        },
+        {
+          EmployeeName: "EmployeeName2072",
+          EmployeeID: "1042",
+          ProjectID: "P1022",
+          ManagerName: "ManagerName1022",
+          CheckInDate: "12-04-2019",
+          CheckOutDate: "13-04-2019"
+        }
+      ]
     }
   ]
+  // RoomData: []
 };
+
 export default function showRoomsList(state = initialState, action) {
   console.log("ROOM_REDUCER : action.type : ", action.type);
   console.log("ROOM_REDUCER : action.payload : ", action.payload);
   console.log("---------------------------------------------------");
 
   switch (action.type) {
+    case "SET_SERVICE_ROOMDATA":
+      console.log("Response from service : ", action.payload);
+      return { RoomData: action.payload };
+    // case "SET_SERVICE_ROOMDATA_FAILURE":
+    //   console.log("Error Response from service : ", action.payload);
+    //   return { RoomData: action.payload };
     case "SUBMIT_ADD_ROOM":
       state.RoomData.map((room, i) => {
         if (room.RoomID === action.payload.BookedEmployeeDetails.RoomID) {
@@ -333,10 +377,18 @@ export default function showRoomsList(state = initialState, action) {
 
     //   return { RoomData: filterData };
     default:
-      console.log(
-        "RoomReducer : Default Case Called THE END RoomData, ",
-        state.RoomData
-      );
-      return { RoomData: state.RoomData };
+      console.log("RoomReducer : Default Case Called THE END RoomData, ");
+      if (config.service) {
+        console.log("Final Room Reducer data : ");
+        return { state };
+      } else {
+        // console.log(
+        //   "RoomReducer : Default Case Called THE END RoomData, ",
+        //   state.RoomData
+        // );
+        console.log("Final Room Reducer data : ");
+        return { RoomData: state.RoomData };
+        // return { RoomData: null };
+      }
   }
 }

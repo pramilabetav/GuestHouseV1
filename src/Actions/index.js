@@ -1,3 +1,6 @@
+// import roomService from ""
+import { roomService } from "../Services/RoomService";
+import { config } from "../Configs/Config";
 export function setRoomsFlagAction(
   roomFlag,
   addRoomFlag,
@@ -24,6 +27,131 @@ export function setRoomsFlagAction(
     }
   };
 }
+
+// export function getAll() {
+//   console.log("Action getAll");
+//   if (config.service) {
+//     return dispatch => {
+//       // dispatch(request());
+
+//       roomService
+//         .getAll()
+//         .then(
+//           response => dispatch(success(response)),
+//           error => dispatch(failure(error.toString()))
+//         );
+//     };
+
+//     // function request() {
+//     //   return { type: "GETALL_REQUEST" };
+//     // }
+//     function success(users) {
+//       console.log("success action ", users);
+//       return { type: "GETALL_SUCCESS", users };
+//     }
+//     function failure(error) {
+//       console.log("error action ", error);
+//       return { type: "GETALL_FAILURE", error };
+//     }
+//   } else {
+//     console.log("Else : Action getRoomService");
+
+//     return { type: "GETALL_SUCCESS", payload: users };
+//   }
+// }
+
+// export function getRoomService() {
+//   console.log("roomService function---->");
+//   return (
+//     fetch("https://jsonplaceholder.typicode.com/users")
+//       // return fetch(
+//       //   "https://10.119.79.57:8443/reservation/allRoomBookingDetails/?checkInDate=04-03-2019&checkOutDate=04-04-2019"
+//       .then(handleResponse)
+//   );
+// }
+
+// function handleResponse(response) {
+//   console.log("handleResponse method : ", response);
+
+//   response.text().then(text => {
+//     const data = text && JSON.parse(text);
+//     console.log("Service Data : ", data);
+//     if (data) {
+//       return { type: "SET_SERVICE_ROOMDATA", payload: response };
+//     }
+//   });
+// }
+
+// export function getRoomService() {
+//   console.log("Action getRoomService : ", config.service);
+//   if (config.service) {
+//     return dispatch => {
+//       roomService.getRoomService().then(
+//         response => success(response)
+//         // error => dispatch(failure(error.toString()))
+//       );
+//     };
+
+//     function success(response) {
+//       console.log("GetRoomService success action ", response);
+//       return { type: "SET_SERVICE_ROOMDATA", payload: response };
+//     }
+//     function failure(error) {
+//       console.log("error action ", error);
+//       console.log("Type of  : error : ", typeof error);
+//       return { type: "SET_SERVICE_ROOMDATA_FAILURE", payload: error };
+//     }
+//   } else {
+//     console.log("Else : Action getRoomService");
+//     return { type: "SET_SERVICE_ROOMDATA_TEMP", payload: [] };
+//     // return null;
+//   }
+// }
+
+export function getRoomService() {
+  if (config.service) {
+    return dispatch => {
+      roomService
+        .getRoomService()
+        .then(response => dispatch(success(response)));
+    };
+
+    function success(response) {
+      console.log("GetRoomService called----->", response.data);
+      return { type: "SET_SERVICE_ROOMDATA", payload: response.data };
+    }
+  } else {
+    console.log("Else : Action getRoomService");
+    return { type: "SET_SERVICE_ROOMDATA_TEMP", payload: [] };
+  }
+}
+
+// export function getRoomService() {
+//   console.log("Action getRoomService : ", config.service);
+//   if (config.service) {
+//     return dispatch => {
+//       roomService.getRoomService().then(
+//         response => dispatch(success(response))
+//         // error => dispatch(failure(error.toString()))
+//       );
+//     };
+
+//     function success(response) {
+//       console.log("success action ", response);
+//       return { type: "SET_SERVICE_ROOMDATA", payload: response };
+//     }
+//     function failure(error) {
+//       console.log("error action ", error);
+//       console.log("Type of  : error : ", typeof error);
+//       return { type: "SET_SERVICE_ROOMDATA_FAILURE", payload: error };
+//     }
+//   } else {
+//     console.log("Else : Action getRoomService");
+//     return { type: "SET_SERVICE_ROOMDATA_TEMP", payload: [] };
+//     // return null;
+//   }
+// }
+
 // export function showAddRoomsBookingPage(addRoomFlag, roomFlag) {
 //   console.log("Action : ADD_ROOM_FLAG", roomFlag);
 //   return {
