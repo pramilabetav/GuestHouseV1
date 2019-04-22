@@ -1,3 +1,4 @@
+
 const initialState = {
   // BookedRoomData: [
   //   {
@@ -13,6 +14,7 @@ const initialState = {
   //     CheckOutDate: "05/03/2019"
   //   }
   // ]
+
 };
 
 export default function showRoomsList(state = initialState, action) {

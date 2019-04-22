@@ -42,6 +42,7 @@ class Rooms extends React.Component {
   //   this.props.dispatch(getRoomService());
   //   setTimeout(() => this.setState({ loading: true }), 25000);
   // }
+
   render() {
     // if (this.state.loading) {
     //   console.log("Printing error : ", this.props.roomList.RoomData);
@@ -149,6 +150,8 @@ class Rooms extends React.Component {
             <label className="legendInfo">Not Available</label>
           </div>
         </div>
+
+
       </div>
     );
   }
