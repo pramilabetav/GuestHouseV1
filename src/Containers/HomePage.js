@@ -6,14 +6,17 @@ import Rooms from "./Rooms.js";
 import AddNewBooking from "./AddNewBooking";
 import SuccessPage from "./SuccessPage";
 import ViewEditBookingPage from "./ViewEditBookingPage";
+import BookingSuggestions from "./BookingSuggestions";
+import BookingCalendar from "./BookingCalendar";
 
 class HomePage extends React.Component {
   //create a function to return specific component to display
   render() {
-    const randomNum = Math.random();
-    console.log("HomePage: randomNum : ", randomNum);
+    // const randomNum = Math.random();
+    // console.log("HomePage: randomNum : ", randomNum);
 
     return (
+      // <DateContainer />
       <div className="container">
         {this.props.showRoomFlag.editFlag ? (
           <ViewEditBookingPage />
@@ -25,9 +28,14 @@ class HomePage extends React.Component {
           <div>
             <DateContainer />
             <Rooms />
+            <BookingSuggestions />
+            <BookingCalendar />
           </div>
         ) : (
-          <DateContainer />
+          <div>
+            <DateContainer />
+            <BookingCalendar />
+          </div>
         )}
       </div>
     );

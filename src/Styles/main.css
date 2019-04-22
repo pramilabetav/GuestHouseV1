@@ -92,6 +92,9 @@
   color: white;
   cursor: pointer;
 }
+.roomNumber-suggestion {
+  color: #00a8ff;
+}
 .buttonHolder {
   display: flex;
   flex-direction: column;
@@ -275,4 +278,26 @@ label {
 }
 .gmTeoB.gmTeoB {
   z-index: 998;
+}
+.suggestionPanel {
+  padding: 0 20px;
+  background: rgb(245, 244, 244);
+  border-radius: 5px;
+}
+li.dateRange {
+  list-style: none;
+}
+.suggestions {
+  box-shadow: 0 0 5px grey;
+  background: rgb(245, 244, 244);
+}
+.error {
+  width: 100%;
+  text-align: center;
+}
+.errorInfo {
+  font-size: 25px;
+  color: RED;
+  /* text-align: center;
+  display: inline-flex; */
 }

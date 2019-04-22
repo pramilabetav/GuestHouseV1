@@ -7,6 +7,7 @@ import SelectedEmployeeReducer from "./SelectedEmployeeReducer";
 import DateReducer from "./DateReducer";
 import FilterRoomDataReducer from "./FilterRoomDataReducer";
 import GapArrayReducer from "./GapArrayReducer";
+import ErrorReducer from "./ErrorReducer";
 
 const rootReducer = combineReducers({
   roomsList: RoomReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   selectedEmployeeDetails: SelectedEmployeeReducer,
   dateReducer: DateReducer,
   filterRoomData: FilterRoomDataReducer,
-  gapArrayData: GapArrayReducer
+  gapArrayData: GapArrayReducer,
+  errorData: ErrorReducer
 });
 
 export default rootReducer;
