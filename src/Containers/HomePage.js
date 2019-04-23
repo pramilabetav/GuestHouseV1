@@ -16,6 +16,7 @@ class HomePage extends React.Component {
     // console.log("HomePage: randomNum : ", randomNum);
 
     return (
+      console.log("Adding comment to check for GitHub commit is working or not ?");
       // <DateContainer />
       <div className="container">
         {this.props.showRoomFlag.editFlag ? (
