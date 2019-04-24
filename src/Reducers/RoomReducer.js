@@ -1,4 +1,3 @@
-
 import moment from "moment";
 import { config } from "../Configs/Config";
 
@@ -188,8 +187,8 @@ const initialState = {
           EmployeeID: "1061",
           ProjectID: "P101",
           ManagerName: "EmployeeName106",
-          CheckInDate: "03-04-2019",
-          CheckOutDate: "05-04-2019"
+          CheckInDate: "03-03-2019",
+          CheckOutDate: "05-03-2019"
         },
         {
           EmployeeName: "Employee106",
@@ -301,21 +300,27 @@ const initialState = {
     }
   ]
   // RoomData: []
-
 };
 
 export default function showRoomsList(state = initialState, action) {
   console.log("ROOM_REDUCER : action.type : ", action.type);
   console.log("ROOM_REDUCER : action.payload : ", action.payload);
   console.log("---------------------------------------------------");
-
+  // if (config.service) {
+  //     state = {
+  //       RoomData: []
+  //     }
+  //   }
   switch (action.type) {
     case "SET_SERVICE_ROOMDATA":
-      console.log("Response from service : ", action.payload);
-      return { RoomData: action.payload };
-    // case "SET_SERVICE_ROOMDATA_FAILURE":
-    //   console.log("Error Response from service : ", action.payload);
-    //   return { RoomData: action.payload };
+      console.log("REsponse from service : ", action.payload);
+      state = action.payload;
+      // return { RoomData: action.payload.RoomData };
+      return { ...state };
+
+    case "SET_SERVICE_ROOMDATA_TEMP":
+      console.log("Error Response from service : ", action.payload);
+      return { ...state };
     case "SUBMIT_ADD_ROOM":
       state.RoomData.map((room, i) => {
         if (room.RoomID === action.payload.BookedEmployeeDetails.RoomID) {
@@ -323,9 +328,10 @@ export default function showRoomsList(state = initialState, action) {
             action.payload.BookedEmployeeDetails
           );
         }
-        return { RoomData: state.RoomData };
+        console.log("What is in state : ", state);
+        return {...state};
       });
-      return { RoomData: state.RoomData };
+      return {...state};
     case "DELETE_EMPLOYEE":
       let localvar;
       state.RoomData.map((room, i) => {
@@ -379,18 +385,24 @@ export default function showRoomsList(state = initialState, action) {
 
     //   return { RoomData: filterData };
     default:
-      console.log("RoomReducer : Default Case Called THE END RoomData, ");
-      if (config.service) {
-        console.log("Final Room Reducer data : ");
-        return { state };
-      } else {
-        // console.log(
-        //   "RoomReducer : Default Case Called THE END RoomData, ",
-        //   state.RoomData
-        // );
-        console.log("Final Room Reducer data : ");
-        return { RoomData: state.RoomData };
-        // return { RoomData: null };
-      }
+    if (config.service) {
+    state = {
+      RoomData  : []
+    } 
+  } else { 
+    state = initialState
+    }
+      console.log("Default Room Reducer :", action.payload);
+      return { ...state };
+      // if (config.service) {
+      //   return { ...state };
+      // } else {
+      //   console.log(
+      //     "RoomReducer : Default Case Called THE END RoomData, ",
+      //     state.RoomData
+      //   );
+      //   return { RoomData: state.RoomData };
+      //   // return { RoomData: null };
+      // }
   }
 }

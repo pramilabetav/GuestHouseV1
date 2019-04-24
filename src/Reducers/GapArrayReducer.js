@@ -1,7 +1,7 @@
 export default function showGapArrayValue(state = null, action) {
-  // console.log("Reducer : GAP_ARRAY : action.type : ", action.type);
-  // console.log("Reducer : GAP_ARRAY : action.payload : ", action.payload);
-  // console.log("---------------------------------------------------");
+  console.log("Reducer : GAP_ARRAY : action.type : ", action.type);
+  console.log("Reducer : GAP_ARRAY : action.payload : ", action.payload);
+  console.log("---------------------------------------------------");
   switch (action.type) {
     case "GAP_ARRAY":
       return action.payload;
