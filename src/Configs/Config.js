@@ -1,3 +1,3 @@
 export const config = {
-  service: false
+  service: true
 };

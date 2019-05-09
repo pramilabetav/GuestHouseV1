@@ -301,3 +301,9 @@ li.dateRange {
   /* text-align: center;
   display: inline-flex; */
 }
+.loaderInfo {
+  width: 100%;
+  text-align: center;
+  font-size: 25px;
+  color: black;
+ }

@@ -3,10 +3,15 @@ import { connect } from "react-redux";
 
 class ErrorContainer extends React.Component {
   render() {
-    console.log("ErrorContainer : errorData : ", this.props.errorData);
+    let errorString = "";
+    errorString = this.props.errorData +"";
+    console.log("ErrorContainer : errorData : ",this.props.errorData, " STRIGIFY : ",  JSON.stringify(this.props.errorData), " typeOF : " , typeof this.props.errorData);
+    if(errorString.includes("Network")) {
+      console.log("IF block : NETWORK ERROR");
+    }
     return (
       <div className="error">
-        <label className="errorInfo">{this.props.errorData.error}</label>
+        <label className="errorInfo">{errorString}</label>
       </div>
     );
   }

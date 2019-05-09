@@ -1,36 +1,50 @@
 {
-  "name": "guesthousev1",
+  "name": "guesthouse",
   "version": "1.0.0",
-  "description": "",
+  "description": "guesthouse project",
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
-    "axios": "0.18.0",
     "babel": "6.23.0",
     "babel-core": "6.26.3",
     "babel-loader": "8.0.5",
     "babel-preset-es2015": "6.24.1",
     "babel-preset-react": "6.24.1",
     "bootstrap": "4.3.0",
-    "isomorphic-fetch": "2.2.1",
     "moment": "2.24.0",
-    "react": "16.8.6",
-    "react-big-calendar": "0.18.0",
+    "react": "16.8.0",
     "react-dom": "16.8.0",
     "react-modern-datepicker": "0.7.1",
     "react-redux": "6.0.0",
     "react-scripts": "2.0.3",
     "redux": "4.0.1",
     "redux-simple-router": "latest",
-    "redux-thunk": "2.3.0",
     "webpack": "4.29.6",
     "webpack-cli": "3.3.0",
     "webpack-command": "0.4.2",
     "webpack-dev-server": "3.2.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "axios": "^0.18.0",
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^2.1.1",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "html-webpack-plugin": "^3.2.0",
+    "i": "^0.3.6",
+    "mini-css-extract-plugin": "^0.5.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "redux-thunk": "^2.3.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.29.6",
+    "webpack-dev-server": "^3.2.1"
+  },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "webpack-dev-server --hot",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
@@ -40,5 +54,7 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "author": "Pummy",
+  "license": "ISC"
 }
